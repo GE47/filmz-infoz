@@ -6,7 +6,9 @@ const Layout: React.FC = ({ children }) => {
   return (
     <Container maxW="container.xl">
       <NavBar />
-      {children}
+      <Container minH="80vh" maxW="container.lg">
+        {children}
+      </Container>
       <Footer />
     </Container>
   );
