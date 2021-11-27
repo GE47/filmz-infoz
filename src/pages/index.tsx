@@ -1,0 +1,10 @@
+export { default as Actor } from "./Actor";
+export { default as Actors } from "./Actors";
+export { default as Movie } from "./Movie";
+export { default as Movies } from "./Movies";
+export { default as Bookmarks } from "./Bookmarks";
+export { default as Home } from "./Home";
+export { default as Genre } from "./Genre";
+export { default as Register } from "./Register";
+export { default as SignIn } from "./SignIn";
+export { default as Search } from "./Search";

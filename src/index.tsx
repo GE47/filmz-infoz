@@ -4,6 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import "@brainhubeu/react-carousel/lib/style.css";
 import "@fontsource/poppins";
+import { BrowserRouter } from "react-router-dom";
 import "focus-visible/dist/focus-visible";
 
 import App from "./App";
@@ -14,7 +15,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <Provider store={store}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </Provider>
     </ChakraProvider>
   </React.StrictMode>,
