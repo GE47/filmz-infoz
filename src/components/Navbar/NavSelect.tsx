@@ -31,7 +31,7 @@ const NavSelect: React.FC<IProps> = ({
         </Text>
       </MenuButton>
 
-      <MenuList>
+      <MenuList zIndex={10}>
         {items.map((item, index) =>
           path ? (
             <MenuItem key={index} as={Link} to={`${path}/${item.id}`}>
