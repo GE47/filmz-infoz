@@ -35,6 +35,7 @@ const Card: React.FC<IProps> = ({
         transition: ".2s ease-in-out",
         transform: "scale(1.02)",
       }}
+      w={{ base: "110px", md: "250px" }}
     >
       <Skeleton
         isLoaded={imageLoaded}
