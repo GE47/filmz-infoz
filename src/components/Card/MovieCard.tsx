@@ -1,5 +1,7 @@
-import { Box, CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+
 import Bookmark from "../Bookmark";
+import Rating from "../Rating";
 import Card from "./index";
 
 interface IProps {
@@ -19,9 +21,7 @@ const MovieCard: React.FC<IProps> = ({ name, rating, id, imageUrl }) => {
         w="full"
         pb="5px"
       >
-        <CircularProgress value={rating} min={0} max={10} size="45px">
-          <CircularProgressLabel>{rating}/10</CircularProgressLabel>
-        </CircularProgress>
+        <Rating value={rating} />
         <Bookmark id={id} />
       </Box>
     </Card>
