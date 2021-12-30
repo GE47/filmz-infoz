@@ -12,12 +12,7 @@ const CarouselImage: React.FC<IProps> = ({ src, id }) => {
 
   return (
     <Box pos="relative" w="full">
-      <Skeleton
-        isLoaded={isLoaded}
-        borderRadius="md"
-        startColor="blue.800"
-        endColor="gray.500"
-      >
+      <Skeleton isLoaded={isLoaded} borderRadius="md">
         <Image
           onLoad={() => setIsLoaded(true)}
           src={src}

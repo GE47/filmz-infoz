@@ -37,11 +37,7 @@ const Card: React.FC<IProps> = ({
       }}
       w={{ base: "110px", md: "250px" }}
     >
-      <Skeleton
-        isLoaded={imageLoaded}
-        startColor="blue.800"
-        endColor="gray.500"
-      >
+      <Skeleton isLoaded={imageLoaded}>
         <Image
           src={imageUrl}
           onLoad={() => setImageLoaded(true)}
