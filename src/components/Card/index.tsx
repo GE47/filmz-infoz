@@ -46,16 +46,12 @@ const Card: React.FC<IProps> = ({
           src={imageUrl}
           onLoad={() => setImageLoaded(true)}
           w={{ base: "110px", md: "250px" }}
-          h={{ base: "110px", md: "200px" }}
+          h={{ base: "100px", md: "180px" }}
           objectFit="cover"
           pointerEvents="none"
         />
       </Skeleton>
       <Box
-        position="absolute"
-        bottom="0"
-        left="0"
-        h="75px"
         bg="gray.600"
         opacity="0.8"
         w="full"
