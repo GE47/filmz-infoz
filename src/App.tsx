@@ -1,6 +1,8 @@
-import Layout from "./components/Layout";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
+import Layout from "./components/Layout";
 import {
   Home,
   Actor,
@@ -13,8 +15,27 @@ import {
   Register,
   Search,
 } from "./pages";
+import LoadingIndicator from "./components/LoadingIndicator";
+import { auth } from "./firebase";
+import {
+  selectUserStatus,
+  updateUserCredentials,
+} from "./store/user/userSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const userLoadingStatus = useSelector(selectUserStatus);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(updateUserCredentials({ email: user.email, uid: user.uid }));
+      }
+    });
+  }, [dispatch]);
+
+  if (userLoadingStatus === "loading") return <LoadingIndicator />;
+
   return (
     <Layout>
       <Routes>
