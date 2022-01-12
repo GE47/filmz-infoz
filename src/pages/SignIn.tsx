@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineMail, AiOutlineKey } from "react-icons/ai";
 import { Formik } from "formik";
 import * as yup from "yup";
 
 import FormContainer from "../components/Form/FormContainer";
 import FormInput from "../components/Form/FormInput";
+import { selectUserMessage, singInWithEmail } from "../store/user/userSlice";
 
 interface FormValues {
   email: string;
@@ -25,15 +26,20 @@ const schema = yup.object().shape({
 });
 
 const SignIn = () => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const dispatch = useDispatch();
+  const errorMessage = useSelector(selectUserMessage);
+
+  const handleSignIn = ({ email, password }: FormValues) => {
+    dispatch(singInWithEmail({ email, password }));
+  };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
       validateOnChange={false}
-      onSubmit={() => {
-        setErrorMessage("Something went wrong");
+      onSubmit={(value) => {
+        handleSignIn(value);
       }}
     >
       {({ handleSubmit, errors }) => (

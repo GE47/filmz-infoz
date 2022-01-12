@@ -1,10 +1,11 @@
-import { useState } from "react";
 import { AiOutlineMail, AiOutlineKey } from "react-icons/ai";
 import { Formik } from "formik";
 import * as yup from "yup";
 
 import FormContainer from "../components/Form/FormContainer";
 import FormInput from "../components/Form/FormInput";
+import { useDispatch, useSelector } from "react-redux";
+import { registerWithEmail, selectUserMessage } from "../store/user/userSlice";
 
 interface FormValues {
   email: string;
@@ -31,16 +32,19 @@ const schema = yup.object().shape({
 });
 
 const Register = () => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const errorMessage = useSelector(selectUserMessage);
+  const dispatch = useDispatch();
+
+  const handleRegister = (values: FormValues) => {
+    dispatch(registerWithEmail(values));
+  };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
       validateOnChange={false}
-      onSubmit={() => {
-        setErrorMessage("Done");
-      }}
+      onSubmit={handleRegister}
     >
       {({ handleSubmit, errors }) => (
         <FormContainer
