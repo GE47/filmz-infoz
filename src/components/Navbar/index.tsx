@@ -1,3 +1,4 @@
+import { useSelector, useDispatch } from "react-redux";
 import {
   Box,
   Button,
@@ -11,13 +12,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { IoLanguage } from "react-icons/io5";
 
 import NavSelect from "./NavSelect";
 import NavBurger from "./NavBurger";
 import SearchInput from "./SearchInput";
+import { selectUserData, signOut } from "../../store/user/userSlice";
 
 const movieItems = [
   { name: "Popular", id: "popular" },
@@ -37,11 +38,17 @@ const languageItems = [
   { name: "English", id: "en" },
   { name: "Arabic", id: "ar" },
 ];
+//TODO fix the z index for the menuList of the user.
 
 const NavBar = () => {
-  const [isLoggedIn] = useState<boolean>(false);
+  const currentUser = useSelector(selectUserData);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
 
   const handleLanguageChange = (id: string): void => {};
 
@@ -84,7 +91,7 @@ const NavBar = () => {
 
           <SearchInput onSearch={handleSearch} size="sm" />
 
-          {isLoggedIn ? (
+          {currentUser ? (
             <Menu autoSelect={false} placement="auto" gutter={7}>
               <MenuButton as={Box} cursor="pointer">
                 <Text
@@ -96,10 +103,10 @@ const NavBar = () => {
                   borderRadius="md"
                   px="5px"
                 >
-                  UserName <FiChevronDown />
+                  {currentUser.email} <FiChevronDown />
                 </Text>
               </MenuButton>
-              <MenuList>
+              <MenuList zIndex={999}>
                 <MenuItem>
                   <ChakraLink
                     textAlign="center"
@@ -110,7 +117,7 @@ const NavBar = () => {
                     Bookmarks
                   </ChakraLink>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={handleSignOut}>
                   <Text
                     textAlign="center"
                     w="full"
@@ -147,8 +154,10 @@ const NavBar = () => {
           movieItems={movieItems}
           genreItems={genreItems}
           languageItems={languageItems}
+          currentUser={currentUser}
           onLanguageClicked={handleLanguageChange}
           onSearch={handleSearch}
+          onSignOut={handleSignOut}
         />
       </Box>
       <Divider />

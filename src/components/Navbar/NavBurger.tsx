@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   useDisclosure,
@@ -22,6 +21,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoLanguage } from "react-icons/io5";
 
 import SearchInput from "./SearchInput";
+import { UserState } from "../../store/user/userSlice";
 
 type item = { name: string; id: string };
 
@@ -31,6 +31,8 @@ interface IProps {
   languageItems: item[];
   onLanguageClicked: (id: string) => void;
   onSearch: (value: string) => void;
+  onSignOut: () => void;
+  currentUser: UserState["data"];
 }
 
 const NavBurger: React.FC<IProps> = ({
@@ -39,10 +41,10 @@ const NavBurger: React.FC<IProps> = ({
   languageItems,
   onLanguageClicked,
   onSearch,
+  currentUser,
+  onSignOut,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [isLoggedIn] = useState<boolean>(true);
 
   const handleSearch = (value: string) => {
     onSearch(value);
@@ -59,6 +61,7 @@ const NavBurger: React.FC<IProps> = ({
         <DrawerContent display={{ md: "none" }} overflowY="auto">
           <DrawerCloseButton size="lg" />
           <DrawerBody as={Stack} fontSize="20" pt="10">
+            {currentUser && <Text>Welcome, <i>{currentUser.email}</i></Text>}
             <Box
               display="flex"
               alignItems="center"
@@ -81,7 +84,7 @@ const NavBurger: React.FC<IProps> = ({
               Actors
             </ChakraLink>
 
-            {isLoggedIn ? (
+            {currentUser ? (
               <ChakraLink
                 variant="navItem"
                 to="/bookmarks"
@@ -122,12 +125,12 @@ const NavBurger: React.FC<IProps> = ({
             />
 
             <Box display="flex" justifyContent="center" style={{ gap: 5 }}>
-              {isLoggedIn ? (
+              {currentUser ? (
                 <Button
                   w="150px"
                   bg="red.500"
                   _hover={{ bg: "red.600" }}
-                  onClick={onClose}
+                  onClick={onSignOut}
                 >
                   Sign Out
                 </Button>
