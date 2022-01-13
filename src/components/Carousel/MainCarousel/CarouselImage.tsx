@@ -1,13 +1,9 @@
 import { useState } from "react";
-import { Image, Skeleton, Button, Box } from "@chakra-ui/react";
+import { Image, Skeleton, Button, Box, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { MainCarouselProps } from "../../../store/movies/moviesSlice";
 
-interface IProps {
-  src: string;
-  id: number;
-}
-
-const CarouselImage: React.FC<IProps> = ({ src, id }) => {
+const CarouselImage: React.FC<MainCarouselProps> = ({ poster, id, title }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   return (
@@ -15,7 +11,7 @@ const CarouselImage: React.FC<IProps> = ({ src, id }) => {
       <Skeleton isLoaded={isLoaded} borderRadius="md">
         <Image
           onLoad={() => setIsLoaded(true)}
-          src={src}
+          src={`https://image.tmdb.org/t/p/w500/${poster}`}
           alt={`image n.${id}`}
           borderRadius="md"
           w="full"
@@ -36,6 +32,24 @@ const CarouselImage: React.FC<IProps> = ({ src, id }) => {
       >
         More Info
       </Button>
+      <Box
+        w="full"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        pos="absolute"
+        top="38%"
+      >
+        <Text
+          fontSize={{ base: "1rem", md: "2rem" }}
+          bg="gray.800"
+          px="2"
+          borderRadius="md"
+          opacity="0.9"
+        >
+          {title}
+        </Text>
+      </Box>
     </Box>
   );
 };
