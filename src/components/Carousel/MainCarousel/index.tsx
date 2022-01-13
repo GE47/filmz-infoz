@@ -5,14 +5,10 @@ import { Arrow, AutoPlay } from "@egjs/flicking-plugins";
 
 import Arrows from "../Arrows";
 import CarouselImage from "./CarouselImage";
-
-type data = {
-  id: number;
-  url: string;
-};
+import { MainCarouselProps } from "../../../store/movies/moviesSlice";
 
 interface IProps {
-  items: data[];
+  items: MainCarouselProps[] | null;
 }
 
 const MainCarousel: React.FC<IProps> = ({ items }) => {
@@ -22,15 +18,10 @@ const MainCarousel: React.FC<IProps> = ({ items }) => {
   ];
 
   return (
-    <Flicking
-      renderOnlyVisible={true}
-      align="center"
-      plugins={plugins}
-      circular={true}
-    >
-      {items.map((item) => (
+    <Flicking align="center" plugins={plugins} circular={true}>
+      {items?.map((item) => (
         <Box w="full" key={item.id}>
-          <CarouselImage id={item.id} src={item.url} />
+          <CarouselImage id={item.id} poster={item.poster} title={item.title} />
         </Box>
       ))}
       <ViewportSlot>
