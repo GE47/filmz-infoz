@@ -23,7 +23,7 @@ import { IoLanguage } from "react-icons/io5";
 import SearchInput from "./SearchInput";
 import { UserState } from "../../store/user/userSlice";
 
-type item = { name: string; id: string };
+type item = { name: string; id: string | number };
 
 interface IProps {
   movieItems: item[];
@@ -61,7 +61,11 @@ const NavBurger: React.FC<IProps> = ({
         <DrawerContent display={{ md: "none" }} overflowY="auto">
           <DrawerCloseButton size="lg" />
           <DrawerBody as={Stack} fontSize="20" pt="10">
-            {currentUser && <Text>Welcome, <i>{currentUser.email}</i></Text>}
+            {currentUser && (
+              <Text>
+                Welcome, <i>{currentUser.email}</i>
+              </Text>
+            )}
             <Box
               display="flex"
               alignItems="center"
@@ -164,7 +168,7 @@ const NavItemList = (props: {
     expand = false,
   } = props;
 
-  const handleItemClicked = (id?: string) => {
+  const handleItemClicked = (id?: any) => {
     onClose();
     if (id) {
       onNavItemClicked(id);
@@ -185,7 +189,7 @@ const NavItemList = (props: {
                 <ChakraLink
                   variant="navItem"
                   as={Link}
-                  to={path + `/:${item.id}`}
+                  to={path + `/${item.id}`}
                   key={item.id}
                   onClick={() => onClose()}
                 >
