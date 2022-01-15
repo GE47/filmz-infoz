@@ -20,12 +20,7 @@ import NavBurger from "./NavBurger";
 import SearchInput from "./SearchInput";
 import { selectUserData, signOut } from "../../store/user/userSlice";
 import { MOVIE_ITEMS } from "../../constants";
-
-const genreItems = [
-  { name: "Action", id: "28" },
-  { name: "Drama", id: "50" },
-  { name: "Comedy", id: "10" },
-];
+import { selectGenres } from "../../store/movies/moviesSlice";
 
 const languageItems = [
   { name: "English", id: "en" },
@@ -35,6 +30,7 @@ const languageItems = [
 const NavBar = () => {
   const currentUser = useSelector(selectUserData);
   const dispatch = useDispatch();
+  const genres = useSelector(selectGenres);
 
   const navigate = useNavigate();
 
@@ -42,7 +38,7 @@ const NavBar = () => {
     dispatch(signOut());
   };
 
-  const handleLanguageChange = (id: string): void => {};
+  const handleLanguageChange = (id: any): void => {};
 
   const handleSearch = (value: string): void => {
     if (value) navigate(`/search?${createSearchParams({ query: value })}`);
@@ -73,7 +69,7 @@ const NavBar = () => {
             Home
           </ChakraLink>
 
-          <NavSelect title="Genre" items={genreItems} path="/genre" />
+          <NavSelect title="Genre" items={genres.data} path="/genre" />
 
           <NavSelect title="Movies" items={MOVIE_ITEMS} path="/movies" />
 
@@ -144,7 +140,7 @@ const NavBar = () => {
 
         <NavBurger
           movieItems={MOVIE_ITEMS}
-          genreItems={genreItems}
+          genreItems={genres.data}
           languageItems={languageItems}
           currentUser={currentUser}
           onLanguageClicked={handleLanguageChange}

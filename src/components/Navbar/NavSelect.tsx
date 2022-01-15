@@ -12,9 +12,9 @@ import { Link } from "react-router-dom";
 
 interface IProps {
   title: string | JSX.Element;
-  items: { name: string; id: string }[];
+  items: { name: string; id: string | number }[];
   path?: string;
-  onItemClicked?: (id: string) => void;
+  onItemClicked?: (id: string | number) => void;
 }
 
 const NavSelect: React.FC<IProps> = ({
