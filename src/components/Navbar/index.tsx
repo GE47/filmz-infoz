@@ -22,7 +22,6 @@ import { selectUserData, signOut } from "../../store/user/userSlice";
 
 const movieItems = [
   { name: "Popular", id: "popular" },
-  { name: "Latest", id: "latest" },
   { name: "Top Rated", id: "top_rated" },
   { name: "Upcoming", id: "upcoming" },
   { name: "Now Playing", id: "now_playing" },
@@ -38,7 +37,6 @@ const languageItems = [
   { name: "English", id: "en" },
   { name: "Arabic", id: "ar" },
 ];
-//TODO fix the z index for the menuList of the user.
 
 const NavBar = () => {
   const currentUser = useSelector(selectUserData);
