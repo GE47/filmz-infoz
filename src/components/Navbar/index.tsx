@@ -19,13 +19,7 @@ import NavSelect from "./NavSelect";
 import NavBurger from "./NavBurger";
 import SearchInput from "./SearchInput";
 import { selectUserData, signOut } from "../../store/user/userSlice";
-
-const movieItems = [
-  { name: "Popular", id: "popular" },
-  { name: "Top Rated", id: "top_rated" },
-  { name: "Upcoming", id: "upcoming" },
-  { name: "Now Playing", id: "now_playing" },
-];
+import { MOVIE_ITEMS } from "../../constants";
 
 const genreItems = [
   { name: "Action", id: "28" },
@@ -81,7 +75,7 @@ const NavBar = () => {
 
           <NavSelect title="Genre" items={genreItems} path="/genre" />
 
-          <NavSelect title="Movies" items={movieItems} path="/movies" />
+          <NavSelect title="Movies" items={MOVIE_ITEMS} path="/movies" />
 
           <ChakraLink as={Link} to="/actors">
             Actors
@@ -149,7 +143,7 @@ const NavBar = () => {
         </Box>
 
         <NavBurger
-          movieItems={movieItems}
+          movieItems={MOVIE_ITEMS}
           genreItems={genreItems}
           languageItems={languageItems}
           currentUser={currentUser}
