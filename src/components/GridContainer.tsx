@@ -3,9 +3,15 @@ import { Box, Heading, Button, SimpleGrid } from "@chakra-ui/react";
 interface Iprops {
   title?: string | undefined;
   onLoadMore?: () => void;
+  showLoadMore?: boolean;
 }
 
-const GridContainer: React.FC<Iprops> = ({ children, title, onLoadMore }) => {
+const GridContainer: React.FC<Iprops> = ({
+  children,
+  title,
+  onLoadMore,
+  showLoadMore = true,
+}) => {
   return (
     <Box display="flex" flexDir="column">
       <Heading as="h2" fontSize="2xl" pb={2}>
@@ -19,9 +25,11 @@ const GridContainer: React.FC<Iprops> = ({ children, title, onLoadMore }) => {
       >
         {children}
       </SimpleGrid>
-      <Button onClick={onLoadMore} alignSelf="center" mt={5}>
-        Load More
-      </Button>
+      {showLoadMore && (
+        <Button onClick={onLoadMore} alignSelf="center" mt={5}>
+          Load More
+        </Button>
+      )}
     </Box>
   );
 };
