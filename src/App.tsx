@@ -21,6 +21,7 @@ import {
   selectUserStatus,
   updateUserCredentials,
 } from "./store/user/userSlice";
+import NotFound from "./components/404";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,8 @@ const App = () => {
         <Route path="/register" element={<Register />} />
 
         <Route path="/search" element={<Search />} />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
   );
