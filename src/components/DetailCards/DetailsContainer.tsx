@@ -5,7 +5,7 @@ const DetailsContainer: React.FC = ({ children }) => {
     <Box
       display="flex"
       alignItems="center"
-      h={{ base: "full", md: "30vh" }}
+      minH={{ base: "full", md: "30vh" }}
       flexDir={{ base: "column", md: "row" }}
     >
       {children}
