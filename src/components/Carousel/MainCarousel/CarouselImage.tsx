@@ -11,7 +11,7 @@ const CarouselImage: React.FC<MainCarouselProps> = ({ poster, id, title }) => {
       <Skeleton isLoaded={isLoaded} borderRadius="md">
         <Image
           onLoad={() => setIsLoaded(true)}
-          src={`https://image.tmdb.org/t/p/w500/${poster}`}
+          src={`https://image.tmdb.org/t/p/original/${poster}`}
           alt={`image n.${id}`}
           borderRadius="md"
           w="full"
