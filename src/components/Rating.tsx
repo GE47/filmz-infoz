@@ -7,7 +7,7 @@ interface Iprops {
 const Rating: React.FC<Iprops> = ({ value }) => {
   return (
     <CircularProgress value={value} min={0} max={10} size="45px">
-      <CircularProgressLabel>{value}/10</CircularProgressLabel>
+      <CircularProgressLabel>{value.toFixed(1)}/10</CircularProgressLabel>
     </CircularProgress>
   );
 };
