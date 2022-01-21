@@ -1,39 +1,43 @@
 import { Badge, Box, Heading, Skeleton, Text, Image } from "@chakra-ui/react";
-
-import DetailsContainer from "./DetailsContainer";
 import { useState } from "react";
 
-interface Iprops {
-  name: string;
-  bio: string;
-  birthday: string;
-  deathday: string | null;
-  gender: number;
-  imageUrl: string;
-}
+import DetailsContainer from "./DetailsContainer";
+import { ActorProps } from "../../store/actors/actorsSlice";
 
-const ActorDetailCard: React.FC<Iprops> = ({
+const ActorDetailCard: React.FC<ActorProps> = ({
   name,
   bio,
   birthday,
   deathday,
-  imageUrl,
+  poster,
   gender,
 }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   return (
     <DetailsContainer>
-      <Box w={{ base: "100%", md: "50%" }} h="full" borderRadius="md">
+      <Box
+        alignSelf="flex-start"
+        mt={{ base: "0px", md: "10px" }}
+        w={{ base: "100%", md: "50%" }}
+        borderRadius="md"
+      >
         <Skeleton
           h={{ base: "40vh", md: "full" }}
           borderRadius="md"
           isLoaded={isImageLoaded}
         >
           <Image
-            src={imageUrl}
+            src={
+              poster
+                ? `https://image.tmdb.org/t/p/original/${poster}`
+                : "/assets/image_not_found.jpg"
+            }
             w="full"
-            h={{ base: "40vh", md: "full" }}
+            borderRadius="md"
+            h={{ base: "40vh", md: "50vh" }}
+            objectFit="cover"
             onLoad={() => {
               setIsImageLoaded(true);
             }}
@@ -42,9 +46,9 @@ const ActorDetailCard: React.FC<Iprops> = ({
       </Box>
 
       <Box
+        alignSelf="flex-start"
         display="flex"
         flexDir="column"
-        alignItems="start"
         w={{ base: "100%", md: "50%" }}
         h="full"
         pl={{ base: "0", md: "10px" }}
@@ -55,31 +59,40 @@ const ActorDetailCard: React.FC<Iprops> = ({
           {name}
         </Heading>
 
-        <Box>
-          <Badge>Biography:</Badge>{" "}
-          <Text as="span">
-            {bio} Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Quidem quo neque aperiam deserunt iste, quia deleniti quis quos enim
-            labore similique distinctio voluptatem dolore eum, id rem, facilis
-            quaerat?
-          </Text>
-        </Box>
+        {bio && (
+          <Box>
+            <Badge>Biography:</Badge>{" "}
+            <Text as="span" noOfLines={showMore ? undefined : 8}>
+              {bio}
+            </Text>
+            <Text
+              as="span"
+              fontSize="10px"
+              cursor="pointer"
+              textColor="blue.300"
+              onClick={() => setShowMore((prevState) => !prevState)}
+            >
+              {" "}
+              {showMore ? "Read Less" : "Read More"}
+            </Text>
+          </Box>
+        )}
 
-        <Box>
-          <Badge>Birthday:</Badge>
-          <Text as="span">
-            {" "}
-            {birthday}
-            {deathday ? (
-              <span>
-                {" "}
-                To {deathday} <i>(deceased)</i>
-              </span>
-            ) : (
-              ""
-            )}
-          </Text>
-        </Box>
+        {birthday && (
+          <Box>
+            <Badge>Birthday:</Badge>
+            <Text as="span">
+              {" "}
+              {birthday}
+              {deathday && (
+                <span>
+                  {" "}
+                  To {deathday} <i>(deceased)</i>
+                </span>
+              )}
+            </Text>
+          </Box>
+        )}
 
         <Box>
           <Badge>Gender:</Badge>

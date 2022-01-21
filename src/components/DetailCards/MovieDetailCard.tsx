@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Badge, Box, Heading, Skeleton, Text, Image } from "@chakra-ui/react";
 import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import { Arrow } from "@egjs/flicking-plugins";
@@ -5,26 +6,21 @@ import { Arrow } from "@egjs/flicking-plugins";
 import Arrows from "../Carousel/Arrows";
 import DetailsContainer from "./DetailsContainer";
 import Rating from "../Rating";
-import { useState } from "react";
+import { MovieDetailsProps } from "../../store/movies/moviesSlice";
+import { Link } from "react-router-dom";
+import Bookmark from "../Bookmark";
 
-interface Iprops {
-  name: string;
-  description: string;
-  director: string;
-  rating: number;
-  ratingCount: number;
-  imageUrl: string;
-  videoUrl?: string | undefined;
-}
-
-const MovieDetailCard: React.FC<Iprops> = ({
-  name,
+const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
+  title,
   description,
-  director,
   rating,
   ratingCount,
-  imageUrl,
-  videoUrl,
+  poster,
+  backdrop,
+  trailer,
+  genres,
+  length,
+  id,
 }) => {
   const plugins = [new Arrow()];
 
@@ -39,16 +35,26 @@ const MovieDetailCard: React.FC<Iprops> = ({
         h="full"
         plugins={plugins}
         borderRadius="md"
+        pos="relative"
       >
         <Box w="full" h="full">
-          <Skeleton h={{ base: "40vh", md: "full" }} isLoaded={isImageLoaded}>
+          <Skeleton h={{ base: "40vh", md: "50vh" }} isLoaded={isImageLoaded}>
             <Image
-              src={imageUrl}
+              src={
+                poster
+                  ? `https://image.tmdb.org/t/p/original/${poster}`
+                  : backdrop
+                  ? `https://image.tmdb.org/t/p/original/${backdrop} `
+                  : "/assets/image_not_found.jpg"
+              }
               w="full"
-              h="full"
+              h={{ base: "40vh", md: "50vh" }}
               onLoad={() => {
                 setIsImageLoaded(true);
               }}
+              pointerEvents="none"
+              objectFit="contain"
+              bg="gray.700"
             />
           </Skeleton>
         </Box>
@@ -59,18 +65,19 @@ const MovieDetailCard: React.FC<Iprops> = ({
           display="flex"
           alignItems="center"
           justifyContent="center"
+          bg="white"
         >
-          {videoUrl ? (
+          {trailer ? (
             <Skeleton
               w="full"
-              h={{ base: "40vh", md: "full" }}
+              h={{ base: "40vh", md: "50vh" }}
               isLoaded={isVideoLoaded}
             >
               <Box
                 as="iframe"
                 src={
-                  videoUrl
-                    ? `https://www.youtube.com/embed/${videoUrl}`
+                  trailer
+                    ? `https://www.youtube.com/embed/${trailer}`
                     : undefined
                 }
                 title="Trailer"
@@ -78,12 +85,20 @@ const MovieDetailCard: React.FC<Iprops> = ({
                 onLoad={() => {
                   setIsVideoLoaded(true);
                 }}
-                w={{ base: "full", md: "full" }}
-                h={{ base: "40vh", md: "full" }}
+                w="full"
+                h={{ base: "40vh", md: "50vh" }}
               />
             </Skeleton>
           ) : (
-            <Text>Trailer Not Found</Text>
+            <Text
+              pos="absolute"
+              textAlign="center"
+              fontSize="25px"
+              bottom="50%"
+              w="full"
+            >
+              Trailer Not Found
+            </Text>
           )}
         </Box>
         <ViewportSlot>
@@ -91,34 +106,48 @@ const MovieDetailCard: React.FC<Iprops> = ({
         </ViewportSlot>
       </Box>
       <Box
+        alignSelf="flex-start"
         display="flex"
         flexDir="column"
-        alignItems="start"
         w={{ base: "100%", md: "50%" }}
         h="full"
         pl={{ base: "0", md: "10px" }}
         pt="10px"
         style={{ gap: "1rem" }}
       >
-        <Heading as="h3" fontSize="2xl">
-          {name}
-        </Heading>
-        <Text>
-          {description} Lorem ipsum dolor sit, amet consectetur adipisicing
-          elit. Quidem quo neque aperiam deserunt iste, quia deleniti quis quos
-          enim labore similique distinctio voluptatem dolore eum, id rem,
-          facilis quaerat?
-        </Text>
+        <Box display="flex" alignItems="center" style={{ gap: "3px" }}>
+          <Heading as="h3" fontSize="2xl">
+            {title}
+          </Heading>
+          <Bookmark id={id} />
+        </Box>
+        <Text>{description}</Text>
         <Box>
-          <Badge>Directed By: </Badge>
-          <Text as="span"> {director}</Text>
+          <Badge>Geners: </Badge>{" "}
+          <Box display="inline-flex" alignItems="center" style={{ gap: "3px" }}>
+            {genres.map((genre) => (
+              <Badge
+                as={Link}
+                key={genre.id}
+                to={`/genre/${genre.id}`}
+                colorScheme="telegram"
+              >
+                {genre.name}
+              </Badge>
+            ))}
+          </Box>
         </Box>
 
         <Box>
           <Badge>Rating: </Badge> <Rating value={rating} />
-          <Text fontSize="10px" pl="50px" pt="3px">
-            By <i>{ratingCount}</i> users
+          <Text fontSize="12px" pl="50px" pt="3px">
+            By <b>{ratingCount}</b> user
           </Text>
+        </Box>
+
+        <Box>
+          <Badge>Duration: </Badge>{" "}
+          <Text as="span">{length > 0 ? `${length} mins` : `Unknown`} </Text>
         </Box>
       </Box>
     </DetailsContainer>
