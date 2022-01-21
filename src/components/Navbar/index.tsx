@@ -14,13 +14,18 @@ import {
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { FiChevronDown } from "react-icons/fi";
 import { IoLanguage } from "react-icons/io5";
+import { debounce } from "underscore";
 
 import NavSelect from "./NavSelect";
 import NavBurger from "./NavBurger";
 import SearchInput from "./SearchInput";
 import { selectUserData, signOut } from "../../store/user/userSlice";
 import { MOVIE_ITEMS } from "../../constants";
-import { selectGenres } from "../../store/movies/moviesSlice";
+import {
+  getMoviesOnSearch,
+  selectGenres,
+  selectSearchList,
+} from "../../store/movies/moviesSlice";
 
 const languageItems = [
   { name: "English", id: "en" },
@@ -31,6 +36,9 @@ const NavBar = () => {
   const currentUser = useSelector(selectUserData);
   const dispatch = useDispatch();
   const genres = useSelector(selectGenres);
+  const searchList = useSelector(selectSearchList);
+
+  const debouncedDispatch = debounce(dispatch, 400);
 
   const navigate = useNavigate();
 
@@ -40,8 +48,12 @@ const NavBar = () => {
 
   const handleLanguageChange = (id: any): void => {};
 
-  const handleSearch = (value: string): void => {
+  const handleSearchSubmit = (value: string): void => {
     if (value) navigate(`/search?${createSearchParams({ query: value })}`);
+  };
+
+  const handleSearchChange = (value: string): void => {
+    debouncedDispatch(getMoviesOnSearch({ value }));
   };
 
   return (
@@ -77,7 +89,12 @@ const NavBar = () => {
             Actors
           </ChakraLink>
 
-          <SearchInput onSearch={handleSearch} size="sm" />
+          <SearchInput
+            searchResults={searchList.data}
+            onSearchChange={handleSearchChange}
+            onSearchSubmit={handleSearchSubmit}
+            size="sm"
+          />
 
           {currentUser ? (
             <Menu autoSelect={false} placement="auto" gutter={7}>
@@ -144,7 +161,9 @@ const NavBar = () => {
           languageItems={languageItems}
           currentUser={currentUser}
           onLanguageClicked={handleLanguageChange}
-          onSearch={handleSearch}
+          onSearchSubmit={handleSearchSubmit}
+          onSearchChange={handleSearchChange}
+          searchResults={searchList.data}
           onSignOut={handleSignOut}
         />
       </Box>
