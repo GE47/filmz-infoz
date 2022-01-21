@@ -1,69 +1,55 @@
 import { Box } from "@chakra-ui/react";
-import MainCarousel from "../components/Carousel/MainCarousel";
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import Slider from "../components/Slider";
 import MovieCard from "../components/Card/MovieCard";
 import LoadingIndicator from "../components/LoadingIndicator";
-
-type data = {
-  id: number;
-  url: string;
-};
+import MainCarousel from "../components/Carousel/MainCarousel";
+import {
+  selectCarouselMovies,
+  selectPopularSlider,
+  selectTopSlider,
+} from "../store/movies/moviesSlice";
 
 const Home = () => {
-  const [images, setImages] = useState<data[] | null>(null);
+  const mainCarouselMovies = useSelector(selectCarouselMovies);
+  const popularMovies = useSelector(selectPopularSlider);
+  const topRatedMovies = useSelector(selectTopSlider);
 
-  const fetchImages = async () => {
-    try {
-      const request = await fetch(
-        "https://jsonplaceholder.typicode.com/albums/1/photos"
-      );
-
-      const response: data[] = await request.json();
-
-      const result = response.filter((_, index) => index < 8);
-
-      setImages(
-        result.map((data) => {
-          return { id: data.id, url: data.url };
-        })
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchImages();
-  }, []);
-
-  if (!images) return <LoadingIndicator />;
+  if (
+    mainCarouselMovies.status === "loading" ||
+    popularMovies.status === "loading" ||
+    topRatedMovies.status === "loading"
+  )
+    return <LoadingIndicator />;
 
   return (
     <Box>
-      <MainCarousel items={images} />
+      <MainCarousel items={mainCarouselMovies.data} />
+
       <Slider title="Popular Movies">
-        {images.map((image) => (
-          <span key={image.id}>
+        {popularMovies.data.map((movie) => (
+          <span key={movie.id}>
             <MovieCard
-              name="movie name"
-              id={image.id}
-              rating={5}
-              imageUrl={image.url}
+              title={movie.title}
+              id={movie.id}
+              rating={movie.rating}
+              poster={movie.poster}
+              backdrop={movie.backdrop}
             />
           </span>
         ))}
       </Slider>
 
-      <Slider title="Top rated Movies">
-        {images.map((image) => (
-          <span key={image.id}>
+      <Slider title="Top Rated Movies">
+        {topRatedMovies.data.map((movie) => (
+          <span key={movie.id}>
             <MovieCard
-              name="movie name"
-              id={image.id}
-              rating={8}
-              imageUrl={image.url}
+              title={movie.title}
+              id={movie.id}
+              rating={movie.rating}
+              poster={movie.poster}
+              backdrop={movie.backdrop}
             />
           </span>
         ))}

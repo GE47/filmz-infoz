@@ -1,36 +1,90 @@
+import { useEffect } from "react";
 import { Box } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import Slider from "../components/Slider";
 import MovieCard from "../components/Card/MovieCard";
 import ActorCard from "../components/Card/ActorCard";
 import MovieDetailCard from "../components/DetailCards/MovieDetailCard";
+import {
+  getMovieDetails,
+  getMovieTopCast,
+  getMovieTrailer,
+  getRelatedMovies,
+  selectMovieDetails,
+  selectRelatedMovies,
+  selectMovieTopCast,
+} from "../store/movies/moviesSlice";
+import LoadingIndicator from "../components/LoadingIndicator";
+import NotFound from "../components/404";
 
 const Movie: React.FC = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const movieDetails = useSelector(selectMovieDetails);
+  const relatedMovies = useSelector(selectRelatedMovies);
+  const topCast = useSelector(selectMovieTopCast);
+
+  useEffect(() => {
+    if (!id) return;
+
+    dispatch(getMovieDetails({ id }));
+    dispatch(getMovieTrailer({ id }));
+    dispatch(getRelatedMovies({ id }));
+    dispatch(getMovieTopCast({ id }));
+  }, [id, dispatch]);
+
+  if (
+    movieDetails.status === "loading" ||
+    relatedMovies.status === "loading" ||
+    topCast.status === "loading"
+  )
+    return <LoadingIndicator />;
+
+  if (
+    movieDetails.status === "error" ||
+    relatedMovies.status === "error" ||
+    topCast.status === "error"
+  )
+    return <NotFound />;
+
+    if(!id) return null;
 
   return (
     <Box>
       <MovieDetailCard
-        name="Movie Name"
-        rating={10}
-        director="John Doe"
-        description="something"
-        ratingCount={500}
-        imageUrl=""
+        title={movieDetails.data.title}
+        rating={movieDetails.data.rating}
+        description={movieDetails.data.description}
+        ratingCount={movieDetails.data.ratingCount}
+        poster={movieDetails.data.poster}
+        backdrop={movieDetails.data.backdrop}
+        genres={movieDetails.data.genres}
+        length={movieDetails.data.length}
+        trailer={movieDetails.data.trailer}
+        id={id!}
       />
       <Slider title="Top Cast">
-        <span>
-          <ActorCard name="Actor's Name" id="10" imageUrl="" />
-        </span>
+        {topCast.data.map((cast) => (
+          <span key={cast.id}>
+            <ActorCard name={cast.name} id={cast.id} imageUrl={cast.poster} />
+          </span>
+        ))}
       </Slider>
+
       <Slider title="Related Movies">
-        <span>
-          <MovieCard name="movie name" id="11" rating={8} imageUrl="" />
-        </span>
-        <span>
-          <MovieCard name="movie name" id="12" rating={8} imageUrl="" />
-        </span>
+        {relatedMovies.data.map((movie) => (
+          <span key={movie.id}>
+            <MovieCard
+              id={movie.id}
+              title={movie.title}
+              rating={movie.rating}
+              poster={movie.poster}
+              backdrop={movie.backdrop}
+            />
+          </span>
+        ))}
       </Slider>
     </Box>
   );
