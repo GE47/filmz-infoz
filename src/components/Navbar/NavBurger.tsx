@@ -22,6 +22,7 @@ import { IoLanguage } from "react-icons/io5";
 
 import SearchInput from "./SearchInput";
 import { UserState } from "../../store/user/userSlice";
+import { MoviesCardProps } from "../../store/movies/moviesSlice";
 
 type item = { name: string; id: string | number };
 
@@ -30,7 +31,9 @@ interface IProps {
   genreItems: item[];
   languageItems: item[];
   onLanguageClicked: (id: string) => void;
-  onSearch: (value: string) => void;
+  onSearchSubmit: (value: string) => void;
+  onSearchChange: (value: string) => void;
+  searchResults: MoviesCardProps[];
   onSignOut: () => void;
   currentUser: UserState["data"];
 }
@@ -40,14 +43,16 @@ const NavBurger: React.FC<IProps> = ({
   genreItems,
   languageItems,
   onLanguageClicked,
-  onSearch,
+  onSearchSubmit,
+  onSearchChange,
+  searchResults,
   currentUser,
   onSignOut,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSearch = (value: string) => {
-    onSearch(value);
+    onSearchSubmit(value);
     onClose();
   };
 
@@ -72,7 +77,13 @@ const NavBurger: React.FC<IProps> = ({
               justifyContent="center"
               pt="15px"
             >
-              <SearchInput onSearch={handleSearch} width="full" />
+              <SearchInput
+                searchResults={searchResults}
+                onSearchSubmit={handleSearch}
+                onSearchChange={onSearchChange}
+                onSearchItemClicked={onClose}
+                width="full"
+              />
             </Box>
 
             <ChakraLink variant="navItem" to="/" as={Link} onClick={onClose}>
