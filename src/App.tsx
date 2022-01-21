@@ -21,11 +21,19 @@ import {
   selectUserStatus,
   updateUserCredentials,
 } from "./store/user/userSlice";
+import {
+  getMainCarouselMovies,
+  getPopularSlides,
+  getTopRatedSlides,
+  getGenres,
+  selectGenres,
+} from "./store/movies/moviesSlice";
 import NotFound from "./components/404";
 
 const App = () => {
   const dispatch = useDispatch();
   const userLoadingStatus = useSelector(selectUserStatus);
+  const genres = useSelector(selectGenres);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -33,9 +41,15 @@ const App = () => {
         dispatch(updateUserCredentials({ email: user.email, uid: user.uid }));
       }
     });
+
+    dispatch(getMainCarouselMovies());
+    dispatch(getPopularSlides());
+    dispatch(getTopRatedSlides());
+    dispatch(getGenres());
   }, [dispatch]);
 
-  if (userLoadingStatus === "loading") return <LoadingIndicator />;
+  if (userLoadingStatus === "loading" || genres.status === "loading")
+    return <LoadingIndicator />;
 
   return (
     <Layout>
