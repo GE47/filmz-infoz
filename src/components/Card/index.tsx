@@ -6,7 +6,7 @@ export interface IProps {
   title: string;
   path: string;
   alignCenter?: boolean | undefined;
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 const Card: React.FC<IProps> = ({
@@ -39,7 +39,11 @@ const Card: React.FC<IProps> = ({
     >
       <Skeleton isLoaded={imageLoaded}>
         <Image
-          src={imageUrl}
+          src={
+            imageUrl
+              ? `https://image.tmdb.org/t/p/original/${imageUrl}`
+              : "/assets/image_not_found.jpg"
+          }
           onLoad={() => setImageLoaded(true)}
           w={{ base: "110px", md: "250px" }}
           h={{ base: "100px", md: "180px" }}

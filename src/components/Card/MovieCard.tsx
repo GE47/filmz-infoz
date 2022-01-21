@@ -3,17 +3,21 @@ import { Box } from "@chakra-ui/react";
 import Bookmark from "../Bookmark";
 import Rating from "../Rating";
 import Card from "./index";
+import { MoviesCardProps } from "../../store/movies/moviesSlice";
 
-interface IProps {
-  name: string;
-  rating: number;
-  id: string | number;
-  imageUrl: string;
-}
-
-const MovieCard: React.FC<IProps> = ({ name, rating, id, imageUrl }) => {
+const MovieCard: React.FC<MoviesCardProps> = ({
+  title,
+  rating,
+  id,
+  poster,
+  backdrop,
+}) => {
   return (
-    <Card path={`/movie/${id}`} title={name} imageUrl={imageUrl}>
+    <Card
+      path={`/movie/${id}`}
+      title={title}
+      imageUrl={poster ? poster : backdrop}
+    >
       <Box
         display="flex"
         alignItems="center"

@@ -3,7 +3,7 @@ import Card from "./index";
 interface IProps {
   name: string;
   id: string | number;
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 const ActorCard: React.FC<IProps> = ({ name, imageUrl, id }) => {
