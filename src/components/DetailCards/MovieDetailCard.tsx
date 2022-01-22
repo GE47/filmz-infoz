@@ -119,7 +119,12 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
           <Heading as="h3" fontSize="2xl">
             {title}
           </Heading>
-          <Bookmark id={id} />
+          <Bookmark
+            id={id}
+            title={title}
+            rating={rating}
+            poster={poster ? poster : backdrop}
+          />
         </Box>
         <Text>{description}</Text>
         <Box>

@@ -26,7 +26,12 @@ const MovieCard: React.FC<MoviesCardProps> = ({
         pb="5px"
       >
         <Rating value={rating} />
-        <Bookmark id={id} />
+        <Bookmark
+          id={id}
+          rating={rating}
+          poster={poster ? poster : backdrop}
+          title={title}
+        />
       </Box>
     </Card>
   );
