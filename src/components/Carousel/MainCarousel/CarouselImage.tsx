@@ -41,7 +41,7 @@ const CarouselImage: React.FC<MainCarouselProps> = ({ poster, id, title }) => {
         top="38%"
       >
         <Text
-          fontSize={{ base: "1rem", md: "2rem" }}
+          fontSize={{ base: "0.6rem", md: "2rem" }}
           bg="gray.800"
           px="2"
           borderRadius="md"
