@@ -1,5 +1,7 @@
 # Filmz Infoz
 
+[demo](https://adoring-ardinghelli-7f09c8.netlify.app)
+
 A website that displays information about movies and actors, the data is provided from the [TMDB](https://www.themoviedb.org/documentation/api) API.
 
 # Website features
