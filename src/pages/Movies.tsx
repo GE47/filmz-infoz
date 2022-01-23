@@ -26,7 +26,7 @@ const Movies = () => {
 
   return (
     <GridContainer
-      title={`${item.name} Movies`}
+      title={item.name}
       onLoadMore={() => handleLoadMore(totalPages)}
       showLoadMore={totalPages !== currentPage}
     >
