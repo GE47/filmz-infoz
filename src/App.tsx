@@ -18,6 +18,7 @@ import {
 import LoadingIndicator from "./components/LoadingIndicator";
 import { auth } from "./firebase";
 import {
+  selectUserData,
   selectUserStatus,
   updateUserCredentials,
 } from "./store/user/userSlice";
@@ -29,11 +30,13 @@ import {
   selectGenres,
 } from "./store/movies/moviesSlice";
 import NotFound from "./components/404";
+import { getBookmarks, clearBookmarks } from "./store/bookmarks/bookmarksSlice";
 
 const App = () => {
   const dispatch = useDispatch();
   const userLoadingStatus = useSelector(selectUserStatus);
   const genres = useSelector(selectGenres);
+  const currentUser = useSelector(selectUserData);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -47,6 +50,14 @@ const App = () => {
     dispatch(getTopRatedSlides());
     dispatch(getGenres());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (currentUser) {
+      dispatch(getBookmarks({ id: currentUser.uid }));
+    } else {
+      dispatch(clearBookmarks());
+    }
+  }, [dispatch, currentUser]);
 
   if (userLoadingStatus === "loading" || genres.status === "loading")
     return <LoadingIndicator />;
