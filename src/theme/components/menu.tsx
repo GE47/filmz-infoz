@@ -1,8 +1,14 @@
 const Menu = {
-  parts: ["list"],
+  parts: ["list", "item"],
   baseStyle: {
     list: {
       bg: "gray.700",
+      borderColor: "gray.600",
+    },
+    item: {
+      _hover: {
+        bg: "gray.600",
+      },
     },
   },
 };
