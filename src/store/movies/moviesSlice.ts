@@ -24,7 +24,7 @@ export interface MainCarouselProps {
 export interface MoviesCardProps {
   poster: string | null;
   backdrop: string | null;
-  id: number;
+  id: string;
   title: string;
   rating: number;
 }
