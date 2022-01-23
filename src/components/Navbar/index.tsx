@@ -64,15 +64,19 @@ const NavBar = () => {
         justifyContent="space-between"
         py={3}
       >
-        <Link to="/">
-          <Heading flexGrow={1} fontSize={{ base: "xl", md: "3xl", lg: "4xl" }}>
-            Filmz Infoz
-          </Heading>
-        </Link>
+        <Heading
+          as={Link}
+          to="/"
+          flexGrow={4}
+          fontSize={{ base: "xl", md: "3xl", lg: "4xl" }}
+        >
+          Filmz Infoz
+        </Heading>
 
         <Box
           direction="row"
-          style={{ gap: 10 }}
+          justifyContent="space-between"
+          flexGrow={1}
           h="full"
           alignItems="center"
           display={{ base: "none", md: "flex" }}

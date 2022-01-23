@@ -53,14 +53,13 @@ const ActorDetailCard: React.FC<ActorProps> = ({
         h="full"
         pl={{ base: "0", md: "10px" }}
         pt="10px"
-        style={{ gap: "1rem" }}
       >
-        <Heading as="h3" fontSize="2xl">
+        <Heading as="h3" fontSize="2xl" mb="1rem">
           {name}
         </Heading>
 
         {bio && (
-          <Box>
+          <Box mb="1rem">
             <Badge>Biography:</Badge>{" "}
             <Text as="span" noOfLines={showMore ? undefined : 8}>
               {bio}
@@ -79,7 +78,7 @@ const ActorDetailCard: React.FC<ActorProps> = ({
         )}
 
         {birthday && (
-          <Box>
+          <Box mb="1rem">
             <Badge>Birthday:</Badge>
             <Text as="span">
               {" "}

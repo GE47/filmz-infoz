@@ -97,7 +97,6 @@ const SearchInput: React.FC<IProps> = ({
               display="flex"
               alignItems="center"
               mb="1px"
-              style={{ gap: "5px" }}
               key={result.id}
               _hover={{ bg: "gray.300" }}
             >
@@ -122,6 +121,7 @@ const SearchInput: React.FC<IProps> = ({
                 fontSize="xs"
                 isTruncated
                 justifySelf="start"
+                ml="5px"
               >
                 {result.title}
               </Text>

@@ -8,9 +8,10 @@ const NotFound = () => {
       alignItems="center"
       flexDir="column"
       h="50vh"
-      style={{ gap: "10px" }}
     >
-      <Text fontSize="2xl">Page is not found.</Text>
+      <Text fontSize="2xl" mb="10px">
+        Page is not found.
+      </Text>
       <Button as={Link} to="/">
         Return
       </Button>

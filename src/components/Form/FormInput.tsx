@@ -30,7 +30,7 @@ const FormInput: React.FC<IProps> = ({
   label,
 }) => {
   return (
-    <Box>
+    <Box mb="2rem">
       <FormControl>
         <FormLabel>{label} :</FormLabel>
         <InputGroup>

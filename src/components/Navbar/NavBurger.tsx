@@ -139,7 +139,7 @@ const NavBurger: React.FC<IProps> = ({
               onClose={onClose}
             />
 
-            <Box display="flex" justifyContent="center" style={{ gap: 5 }}>
+            <Box display="flex" justifyContent="center">
               {currentUser ? (
                 <Button
                   w="150px"

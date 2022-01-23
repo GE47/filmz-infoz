@@ -43,20 +43,19 @@ const FormContainer: React.FC<IProps> = ({
           flexDir="column"
           justifyContent="center"
           alignItems="center"
-          style={{ gap: "2rem" }}
           onSubmit={onSubmit}
         >
-          <Heading>{title}</Heading>
+          <Heading mb="2rem">{title}</Heading>
 
           {errorMessage && (
-            <Text color="red.500" fontSize="lg">
+            <Text color="red.500" fontSize="lg" mb="2rem">
               {errorMessage}
             </Text>
           )}
 
           {children}
 
-          <Button alignSelf="center" type="submit">
+          <Button alignSelf="center" type="submit" mb="2rem">
             Submit
           </Button>
           <ChakraLink as={Link} to={linkPath} fontSize="15px">

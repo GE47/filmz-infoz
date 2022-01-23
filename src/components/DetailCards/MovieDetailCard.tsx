@@ -113,10 +113,9 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
         h="full"
         pl={{ base: "0", md: "10px" }}
         pt="10px"
-        style={{ gap: "1rem" }}
       >
-        <Box display="flex" alignItems="center" style={{ gap: "3px" }}>
-          <Heading as="h3" fontSize="2xl">
+        <Box display="flex" alignItems="center" mb="1rem">
+          <Heading as="h3" fontSize="2xl" mr="3px">
             {title}
           </Heading>
           <Bookmark
@@ -126,15 +125,12 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
             poster={poster ? poster : backdrop}
           />
         </Box>
-        <Text>{description}</Text>
-        <Box>
+
+        <Text mb="1rem">{description}</Text>
+
+        <Box mb="1rem">
           <Badge>Geners: </Badge>{" "}
-          <Box
-            display="inline-flex"
-            flexWrap="wrap"
-            alignItems="center"
-            style={{ gap: "3px" }}
-          >
+          <Box display="inline-flex" flexWrap="wrap" alignItems="center">
             {genres.map((genre) => (
               <Badge
                 as={Link}
@@ -142,6 +138,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
                 to={`/genre/${genre.id}`}
                 colorScheme="telegram"
                 variant="outline"
+                mr="5px"
               >
                 {genre.name}
               </Badge>
@@ -149,7 +146,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
           </Box>
         </Box>
 
-        <Box my="5px">
+        <Box mb="1rem">
           <Badge>Rating: </Badge> <Rating value={rating} />
           <Text fontSize="12px" pl="50px" pt="3px">
             By <b>{ratingCount}</b> user
