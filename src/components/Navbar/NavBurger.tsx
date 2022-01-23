@@ -188,7 +188,7 @@ const NavItemList = (props: {
 
   return (
     <Accordion allowToggle defaultIndex={expand ? [0] : []}>
-      <AccordionItem borderWidth={0}>
+      <AccordionItem borderWidth={0} borderColor="gray.700">
         <AccordionButton px="1px" py="1px" fontSize="20" color="gray.300">
           {title}
           <AccordionIcon />
