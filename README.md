@@ -12,6 +12,7 @@ A website that displays information about movies and actors, the data is provide
 - Show movies based on filters like popular or top rated or now playing or upcoming movies.
 - View movie and actor details.
 - Add movies to the user bookmarks.
+- English and Arabic language support.
 
 The website is also mobile responsive.
 
