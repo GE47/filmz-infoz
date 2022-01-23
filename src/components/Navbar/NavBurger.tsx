@@ -63,7 +63,7 @@ const NavBurger: React.FC<IProps> = ({
       </Button>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose} size="lg">
         <DrawerOverlay display={{ md: "none" }} />
-        <DrawerContent display={{ md: "none" }} overflowY="auto">
+        <DrawerContent display={{ md: "none" }} overflowY="auto" bg="gray.800">
           <DrawerCloseButton size="lg" />
           <DrawerBody as={Stack} fontSize="20" pt="10">
             {currentUser && (
