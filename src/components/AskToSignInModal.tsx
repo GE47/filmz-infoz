@@ -20,7 +20,7 @@ const AskToSignInModal: React.FC<IProps> = ({ isOpen, onClose }) => {
   return (
     <Modal size="sm" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg="gray.800">
         <ModalHeader>Sign In</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
