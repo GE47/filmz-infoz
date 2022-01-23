@@ -31,11 +31,12 @@ const AskToSignInModal: React.FC<IProps> = ({ isOpen, onClose }) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Box display="flex" style={{ gap: "5px" }}>
+          <Box display="flex">
             <Button
               as={Link}
               to="/signin"
               fontSize={{ base: "13px", md: "16px" }}
+              mr="5px"
             >
               Sing In
             </Button>
