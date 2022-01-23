@@ -49,7 +49,7 @@ const Movie: React.FC = () => {
   )
     return <NotFound />;
 
-    if(!id) return null;
+  if (!id) return null;
 
   return (
     <Box>
@@ -65,27 +65,31 @@ const Movie: React.FC = () => {
         trailer={movieDetails.data.trailer}
         id={id!}
       />
-      <Slider title="Top Cast">
-        {topCast.data.map((cast) => (
-          <span key={cast.id}>
-            <ActorCard name={cast.name} id={cast.id} imageUrl={cast.poster} />
-          </span>
-        ))}
-      </Slider>
+      {topCast.data.length > 0 && (
+        <Slider title="Top Cast">
+          {topCast.data.map((cast) => (
+            <span key={cast.id}>
+              <ActorCard name={cast.name} id={cast.id} imageUrl={cast.poster} />
+            </span>
+          ))}
+        </Slider>
+      )}
 
-      <Slider title="Related Movies">
-        {relatedMovies.data.map((movie) => (
-          <span key={movie.id}>
-            <MovieCard
-              id={movie.id}
-              title={movie.title}
-              rating={movie.rating}
-              poster={movie.poster}
-              backdrop={movie.backdrop}
-            />
-          </span>
-        ))}
-      </Slider>
+      {relatedMovies.data.length > 0 && (
+        <Slider title="Related Movies">
+          {relatedMovies.data.map((movie) => (
+            <span key={movie.id}>
+              <MovieCard
+                id={movie.id}
+                title={movie.title}
+                rating={movie.rating}
+                poster={movie.poster}
+                backdrop={movie.backdrop}
+              />
+            </span>
+          ))}
+        </Slider>
+      )}
     </Box>
   );
 };

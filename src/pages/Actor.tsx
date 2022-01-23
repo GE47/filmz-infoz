@@ -49,19 +49,21 @@ const Actor: React.FC = () => {
         poster={actorDetails.data.poster}
       />
 
-      <Slider title="Participated In">
-        {actorParticipations.data.map((movie) => (
-          <span key={movie.id}>
-            <MovieCard
-              title={movie.title}
-              id={movie.id}
-              rating={movie.rating}
-              poster={movie.poster}
-              backdrop={movie.backdrop}
-            />
-          </span>
-        ))}
-      </Slider>
+      {actorParticipations.data.length > 0 && (
+        <Slider title="Participated In">
+          {actorParticipations.data.map((movie) => (
+            <span key={movie.id}>
+              <MovieCard
+                title={movie.title}
+                id={movie.id}
+                rating={movie.rating}
+                poster={movie.poster}
+                backdrop={movie.backdrop}
+              />
+            </span>
+          ))}
+        </Slider>
+      )}
     </div>
   );
 };
