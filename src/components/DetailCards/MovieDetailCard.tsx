@@ -129,7 +129,12 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
         <Text>{description}</Text>
         <Box>
           <Badge>Geners: </Badge>{" "}
-          <Box display="inline-flex" alignItems="center" style={{ gap: "3px" }}>
+          <Box
+            display="inline-flex"
+            flexWrap="wrap"
+            alignItems="center"
+            style={{ gap: "3px" }}
+          >
             {genres.map((genre) => (
               <Badge
                 as={Link}
@@ -144,7 +149,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
           </Box>
         </Box>
 
-        <Box>
+        <Box my="5px">
           <Badge>Rating: </Badge> <Rating value={rating} />
           <Text fontSize="12px" pl="50px" pt="3px">
             By <b>{ratingCount}</b> user
