@@ -23,6 +23,7 @@ import { IoLanguage } from "react-icons/io5";
 import SearchInput from "./SearchInput";
 import { UserState } from "../../store/user/userSlice";
 import { MoviesCardProps } from "../../store/movies/moviesSlice";
+import { useTranslation } from "react-i18next";
 
 type item = { name: string; id: string | number };
 
@@ -50,6 +51,7 @@ const NavBurger: React.FC<IProps> = ({
   onSignOut,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { t } = useTranslation();
 
   const handleSearch = (value: string) => {
     onSearchSubmit(value);
@@ -68,7 +70,7 @@ const NavBurger: React.FC<IProps> = ({
           <DrawerBody as={Stack} fontSize="20" pt="10">
             {currentUser && (
               <Text>
-                Welcome, <i>{currentUser.email}</i>
+                {t("Welcome")}, <i>{currentUser.email}</i>
               </Text>
             )}
             <Box
@@ -87,7 +89,7 @@ const NavBurger: React.FC<IProps> = ({
             </Box>
 
             <ChakraLink variant="navItem" to="/" as={Link} onClick={onClose}>
-              Home
+              {t("Home")}
             </ChakraLink>
 
             <ChakraLink
@@ -96,7 +98,7 @@ const NavBurger: React.FC<IProps> = ({
               as={Link}
               onClick={onClose}
             >
-              Actors
+              {t("Actors")}
             </ChakraLink>
 
             {currentUser ? (
@@ -106,14 +108,14 @@ const NavBurger: React.FC<IProps> = ({
                 as={Link}
                 onClick={onClose}
               >
-                Bookmarks
+                {t("Bookmarks")}
               </ChakraLink>
             ) : null}
 
             <NavItemList
               items={movieItems}
               path="/movies"
-              title="Movies"
+              title={t("Movies")}
               expand
               onClose={onClose}
             />
@@ -121,7 +123,7 @@ const NavBurger: React.FC<IProps> = ({
             <NavItemList
               items={genreItems}
               path={"/genre"}
-              title="Genre"
+              title={t("Genre")}
               onClose={onClose}
             />
 
@@ -130,7 +132,7 @@ const NavBurger: React.FC<IProps> = ({
               title={
                 <Box as="span" display="flex" alignItems="center">
                   <Text fontSize="20" as="span">
-                    Languages
+                    {t("Languages")}
                   </Text>
                   <IoLanguage />
                 </Box>
@@ -147,11 +149,11 @@ const NavBurger: React.FC<IProps> = ({
                   _hover={{ bg: "red.600" }}
                   onClick={onSignOut}
                 >
-                  Sign Out
+                  {t("Sign Out")}
                 </Button>
               ) : (
                 <Button w="150px" as={Link} to="/signin" onClick={onClose}>
-                  Sign In
+                  {t("Sign In")}
                 </Button>
               )}
             </Box>
@@ -186,6 +188,8 @@ const NavItemList = (props: {
     }
   };
 
+  const { t } = useTranslation();
+
   return (
     <Accordion allowToggle defaultIndex={expand ? [0] : []}>
       <AccordionItem borderWidth={0} borderColor="gray.700">
@@ -204,7 +208,7 @@ const NavItemList = (props: {
                   key={item.id}
                   onClick={() => onClose()}
                 >
-                  {item.name}
+                  {t(item.name)}
                 </ChakraLink>
               ) : (
                 <ChakraLink

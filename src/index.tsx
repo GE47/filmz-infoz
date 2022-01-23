@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import "@fontsource/poppins";
 import { BrowserRouter } from "react-router-dom";
 import "focus-visible/dist/focus-visible";
+import "./il8next";
 
 import App from "./App";
 import theme from "./theme/index";

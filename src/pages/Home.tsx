@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import Slider from "../components/Slider";
 import MovieCard from "../components/Card/MovieCard";
@@ -15,6 +16,7 @@ const Home = () => {
   const mainCarouselMovies = useSelector(selectCarouselMovies);
   const popularMovies = useSelector(selectPopularSlider);
   const topRatedMovies = useSelector(selectTopSlider);
+  const { t } = useTranslation();
 
   if (
     mainCarouselMovies.status === "loading" ||
@@ -27,7 +29,7 @@ const Home = () => {
     <Box>
       <MainCarousel items={mainCarouselMovies.data} />
 
-      <Slider title="Popular Movies">
+      <Slider title={t("Popular Movies")}>
         {popularMovies.data.map((movie) => (
           <span key={movie.id}>
             <MovieCard
@@ -41,7 +43,7 @@ const Home = () => {
         ))}
       </Slider>
 
-      <Slider title="Top Rated Movies">
+      <Slider title={t("Top Rated Movies")}>
         {topRatedMovies.data.map((movie) => (
           <span key={movie.id}>
             <MovieCard

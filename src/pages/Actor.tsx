@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ActorDetailCard from "../components/DetailCards/ActorDetailCard";
 import Slider from "../components/Slider";
@@ -19,6 +20,7 @@ const Actor: React.FC = () => {
   const dispatch = useDispatch();
   const actorDetails = useSelector(selectActorDetails);
   const actorParticipations = useSelector(selectActorParticipations);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!id) return;
@@ -50,7 +52,7 @@ const Actor: React.FC = () => {
       />
 
       {actorParticipations.data.length > 0 && (
-        <Slider title="Participated In">
+        <Slider title={t("Participated In")}>
           {actorParticipations.data.map((movie) => (
             <span key={movie.id}>
               <MovieCard

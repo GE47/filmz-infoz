@@ -1,5 +1,6 @@
 import { Badge, Box, Heading, Skeleton, Text, Image } from "@chakra-ui/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import DetailsContainer from "./DetailsContainer";
 import { ActorProps } from "../../store/actors/actorsSlice";
@@ -14,6 +15,8 @@ const ActorDetailCard: React.FC<ActorProps> = ({
 }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
 
   return (
     <DetailsContainer>
@@ -53,6 +56,7 @@ const ActorDetailCard: React.FC<ActorProps> = ({
         h="full"
         pl={{ base: "0", md: "10px" }}
         pt="10px"
+        style={{ direction: currentLanguage === "ar" ? "rtl" : "ltr" }}
       >
         <Heading as="h3" fontSize="2xl" mb="1rem">
           {name}
@@ -60,7 +64,7 @@ const ActorDetailCard: React.FC<ActorProps> = ({
 
         {bio && (
           <Box mb="1rem">
-            <Badge>Biography:</Badge>{" "}
+            <Badge>{t("Biography")}:</Badge>{" "}
             <Text as="span" noOfLines={showMore ? undefined : 8}>
               {bio}
             </Text>
@@ -72,21 +76,21 @@ const ActorDetailCard: React.FC<ActorProps> = ({
               onClick={() => setShowMore((prevState) => !prevState)}
             >
               {" "}
-              {showMore ? "Read Less" : "Read More"}
+              {showMore ? t("Read Less") : t("Read More")}
             </Text>
           </Box>
         )}
 
         {birthday && (
           <Box mb="1rem">
-            <Badge>Birthday:</Badge>
+            <Badge>{t("Birthday")}:</Badge>
             <Text as="span">
               {" "}
               {birthday}
               {deathday && (
                 <span>
                   {" "}
-                  To {deathday} <i>(deceased)</i>
+                  {t("To")} {deathday} <i>({t("deceased")})</i>
                 </span>
               )}
             </Text>
@@ -94,8 +98,8 @@ const ActorDetailCard: React.FC<ActorProps> = ({
         )}
 
         <Box>
-          <Badge>Gender:</Badge>
-          <Text as="span"> {gender === 2 ? "male" : "female"}</Text>
+          <Badge>{t("Gender")}:</Badge>
+          <Text as="span"> {gender === 2 ? t("Male") : t("Female")}</Text>
         </Box>
       </Box>
     </DetailsContainer>

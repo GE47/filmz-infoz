@@ -9,6 +9,7 @@ import {
 import { Form } from "formik";
 import { Link } from "react-router-dom";
 import { FormEventHandler } from "react";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   errorMessage: string;
@@ -28,6 +29,7 @@ const FormContainer: React.FC<IProps> = ({
   linkPath,
   children,
 }) => {
+  const { t,i18n } = useTranslation();
   return (
     <Container
       maxW="lg"
@@ -35,6 +37,7 @@ const FormContainer: React.FC<IProps> = ({
       display="flex"
       justifyContent="center"
       alignItems="center"
+      style={{ direction: i18n.language === "ar" ? "rtl" : "ltr" }}
     >
       <Box bg="gray.700" borderRadius="lg" p="20px">
         <Box
@@ -56,7 +59,7 @@ const FormContainer: React.FC<IProps> = ({
           {children}
 
           <Button alignSelf="center" type="submit" mb="2rem">
-            Submit
+          {t("Submit")}
           </Button>
           <ChakraLink as={Link} to={linkPath} fontSize="15px">
             {linkText}

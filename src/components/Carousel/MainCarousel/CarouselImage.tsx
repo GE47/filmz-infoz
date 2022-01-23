@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Image, Skeleton, Button, Box, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { MainCarouselProps } from "../../../store/movies/moviesSlice";
+import { useTranslation } from "react-i18next";
 
 const CarouselImage: React.FC<MainCarouselProps> = ({ poster, id, title }) => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   return (
     <Box pos="relative" w="full">
@@ -30,7 +32,7 @@ const CarouselImage: React.FC<MainCarouselProps> = ({ poster, id, title }) => {
         as={Link}
         to={`/movie/${id}`}
       >
-        More Info
+        {t("More Info")}
       </Button>
       <Box
         w="full"

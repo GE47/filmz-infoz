@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Box } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import Slider from "../components/Slider";
 import MovieCard from "../components/Card/MovieCard";
@@ -25,6 +26,7 @@ const Movie: React.FC = () => {
   const movieDetails = useSelector(selectMovieDetails);
   const relatedMovies = useSelector(selectRelatedMovies);
   const topCast = useSelector(selectMovieTopCast);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!id) return;
@@ -66,7 +68,7 @@ const Movie: React.FC = () => {
         id={id!}
       />
       {topCast.data.length > 0 && (
-        <Slider title="Top Cast">
+        <Slider title={t("Top Cast")}>
           {topCast.data.map((cast) => (
             <span key={cast.id}>
               <ActorCard name={cast.name} id={cast.id} imageUrl={cast.poster} />
@@ -76,7 +78,7 @@ const Movie: React.FC = () => {
       )}
 
       {relatedMovies.data.length > 0 && (
-        <Slider title="Related Movies">
+        <Slider title={t("Related Movies")}>
           {relatedMovies.data.map((movie) => (
             <span key={movie.id}>
               <MovieCard

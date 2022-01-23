@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Layout from "./components/Layout";
 import {
@@ -37,6 +38,8 @@ const App = () => {
   const userLoadingStatus = useSelector(selectUserStatus);
   const genres = useSelector(selectGenres);
   const currentUser = useSelector(selectUserData);
+  const { i18n } = useTranslation();
+  const currentLanguage = i18n.language;
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -48,8 +51,11 @@ const App = () => {
     dispatch(getMainCarouselMovies());
     dispatch(getPopularSlides());
     dispatch(getTopRatedSlides());
-    dispatch(getGenres());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getGenres({ language: currentLanguage }));
+  }, [dispatch, currentLanguage]);
 
   useEffect(() => {
     if (currentUser) {

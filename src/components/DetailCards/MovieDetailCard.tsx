@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Badge, Box, Heading, Skeleton, Text, Image } from "@chakra-ui/react";
 import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import { Arrow } from "@egjs/flicking-plugins";
+import { useTranslation } from "react-i18next";
 
 import Arrows from "../Carousel/Arrows";
 import DetailsContainer from "./DetailsContainer";
@@ -23,6 +24,9 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
   id,
 }) => {
   const plugins = [new Arrow()];
+
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
 
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -97,7 +101,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
               bottom="50%"
               w="full"
             >
-              Trailer Not Found
+              {t("Trailer Not Found")}
             </Text>
           )}
         </Box>
@@ -113,6 +117,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
         h="full"
         pl={{ base: "0", md: "10px" }}
         pt="10px"
+        style={{ direction: currentLanguage === "ar" ? "rtl" : "ltr" }}
       >
         <Box display="flex" alignItems="center" mb="1rem">
           <Heading as="h3" fontSize="2xl" mr="3px">
@@ -129,7 +134,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
         <Text mb="1rem">{description}</Text>
 
         <Box mb="1rem">
-          <Badge>Geners: </Badge>{" "}
+          <Badge>{t("Genre")}: </Badge>{" "}
           <Box display="inline-flex" flexWrap="wrap" alignItems="center">
             {genres.map((genre) => (
               <Badge
@@ -147,15 +152,22 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
         </Box>
 
         <Box mb="1rem">
-          <Badge>Rating: </Badge> <Rating value={rating} />
-          <Text fontSize="12px" pl="50px" pt="3px">
+          <Badge>{t("Rating")}: </Badge> <Rating value={rating} />
+          <Text
+            fontSize="12px"
+            pl={currentLanguage === "ar" ? 0 : "50px"}
+            pr={currentLanguage === "ar" ? "50px" : 0}
+            pt="3px"
+          >
             By <b>{ratingCount}</b> user
           </Text>
         </Box>
 
         <Box>
-          <Badge>Duration: </Badge>{" "}
-          <Text as="span">{length > 0 ? `${length} mins` : `Unknown`} </Text>
+          <Badge>{t("Duration")}: </Badge>{" "}
+          <Text as="span">
+            {length > 0 ? `${length} ${t("mins")}` : `Unknown`}{" "}
+          </Text>
         </Box>
       </Box>
     </DetailsContainer>

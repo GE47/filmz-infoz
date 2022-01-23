@@ -1,4 +1,5 @@
 import { Box, Heading, Button, SimpleGrid } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 interface Iprops {
   title?: string | undefined;
@@ -8,14 +9,19 @@ interface Iprops {
 
 const GridContainer: React.FC<Iprops> = ({
   children,
-  title,
+  title = "",
   onLoadMore,
   showLoadMore = true,
 }) => {
+  const { t, i18n } = useTranslation();
   return (
-    <Box display="flex" flexDir="column">
+    <Box
+      display="flex"
+      flexDir="column"
+      style={{ direction: i18n.language === "ar" ? "rtl" : "ltr" }}
+    >
       <Heading as="h2" fontSize="2xl" pb={2}>
-        {title}
+        {t(title)}
       </Heading>
 
       <SimpleGrid

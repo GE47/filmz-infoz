@@ -10,6 +10,7 @@ import {
   ModalFooter,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   isOpen: boolean;
@@ -17,15 +18,14 @@ interface IProps {
 }
 
 const AskToSignInModal: React.FC<IProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   return (
     <Modal size="sm" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent bg="gray.800">
-        <ModalHeader>Sign In</ModalHeader>
+        <ModalHeader>{t("Sign In")}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          Please sing in to add movies to your bookmark list
-        </ModalBody>
+        <ModalBody>{t("Sign in popup")}</ModalBody>
         <ModalFooter
           display="flex"
           justifyContent="space-between"
@@ -38,18 +38,18 @@ const AskToSignInModal: React.FC<IProps> = ({ isOpen, onClose }) => {
               fontSize={{ base: "13px", md: "16px" }}
               mr="5px"
             >
-              Sing In
+              {t("Sign In")}
             </Button>
             <Button
               as={Link}
               to="/register"
               fontSize={{ base: "13px", md: "16px" }}
             >
-              Register
+              {t("Register")}
             </Button>
           </Box>
           <Button onClick={onClose} fontSize={{ base: "13px", md: "16px" }}>
-            Cancel
+            {t("Cancel")}
           </Button>
         </ModalFooter>
       </ModalContent>

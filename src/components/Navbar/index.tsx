@@ -15,6 +15,7 @@ import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import { FiChevronDown } from "react-icons/fi";
 import { IoLanguage } from "react-icons/io5";
 import { debounce } from "underscore";
+import { useTranslation } from "react-i18next";
 
 import NavSelect from "./NavSelect";
 import NavBurger from "./NavBurger";
@@ -37,6 +38,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const genres = useSelector(selectGenres);
   const searchList = useSelector(selectSearchList);
+  const { t, i18n } = useTranslation();
 
   const debouncedDispatch = debounce(dispatch, 400);
 
@@ -46,7 +48,9 @@ const NavBar = () => {
     dispatch(signOut());
   };
 
-  const handleLanguageChange = (id: any): void => {};
+  const handleLanguageChange = (id: any): void => {
+    i18n.changeLanguage(id);
+  };
 
   const handleSearchSubmit = (value: string): void => {
     if (value) navigate(`/search?${createSearchParams({ query: value })}`);
@@ -82,15 +86,15 @@ const NavBar = () => {
           display={{ base: "none", md: "flex" }}
         >
           <ChakraLink as={Link} to="/" boxShadow="0">
-            Home
+            {t("Home")}
           </ChakraLink>
 
-          <NavSelect title="Genre" items={genres.data} path="/genre" />
+          <NavSelect title={t("Genre")} items={genres.data} path="/genre" />
 
-          <NavSelect title="Movies" items={MOVIE_ITEMS} path="/movies" />
+          <NavSelect title={t("Movies")} items={MOVIE_ITEMS} path="/movies" />
 
           <ChakraLink as={Link} to="/actors">
-            Actors
+            {t("Actors")}
           </ChakraLink>
 
           <SearchInput
@@ -123,7 +127,7 @@ const NavBar = () => {
                     as={Link}
                     to="/bookmarks"
                   >
-                    Bookmarks
+                    {t("Bookmarks")}
                   </ChakraLink>
                 </MenuItem>
                 <MenuItem onClick={handleSignOut}>
@@ -135,7 +139,7 @@ const NavBar = () => {
                     borderWidth="thin"
                     p="5px"
                   >
-                    Sign out
+                    {t("Sign Out")}
                   </Text>
                 </MenuItem>
               </MenuList>
@@ -143,7 +147,7 @@ const NavBar = () => {
           ) : (
             <Link to="/signin">
               <Button size="sm" p="10px" h="auto">
-                Sign In
+                {t("Sign In")}
               </Button>
             </Link>
           )}

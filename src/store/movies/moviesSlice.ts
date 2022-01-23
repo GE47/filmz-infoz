@@ -199,8 +199,11 @@ export const getTopRatedSlides = createAsyncThunk(
   }
 );
 
-export const getGenres = createAsyncThunk("movies/getGenres", async () => {
-  const request = await fetch(GENRE_LIST);
+export const getGenres = createAsyncThunk<
+  { name: string; id: number }[],
+  { language: string }
+>("movies/getGenres", async ({ language }) => {
+  const request = await fetch(`${GENRE_LIST}&language=${language}`);
   const data = await request.json();
 
   return data.genres;

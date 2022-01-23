@@ -17,6 +17,7 @@ import {
   clearSearchList,
 } from "../../store/movies/moviesSlice";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   onSearchSubmit: (value: string) => void;
@@ -38,6 +39,7 @@ const SearchInput: React.FC<IProps> = ({
   const [value, setValue] = useState<string>("");
   const [imageLoaded, setImageLoaded] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleValueChange = (searchValue: string) => {
     setValue(searchValue);
@@ -54,7 +56,7 @@ const SearchInput: React.FC<IProps> = ({
     <Box pos="relative" width={width}>
       <InputGroup w={width} size={size} as="form" onSubmit={handleSearch}>
         <Input
-          placeholder="Search movie"
+          placeholder={t("Search movie")}
           variant="primary"
           value={value}
           onChange={(e) => handleValueChange(e.target.value)}

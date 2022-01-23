@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { FiChevronDown } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   title: string | JSX.Element;
@@ -23,6 +24,7 @@ const NavSelect: React.FC<IProps> = ({
   path = "",
   onItemClicked = () => {},
 }) => {
+  const { t } = useTranslation();
   return (
     <Menu autoSelect={false} gutter={2} placement="auto">
       <MenuButton as={Box} cursor="pointer">
@@ -36,7 +38,7 @@ const NavSelect: React.FC<IProps> = ({
           path ? (
             <MenuItem key={index} as={Link} to={`${path}/${item.id}`}>
               <ChakraLink as="span" textAlign="center" w="full">
-                {item.name}
+                {t(item.name)}
               </ChakraLink>
             </MenuItem>
           ) : (

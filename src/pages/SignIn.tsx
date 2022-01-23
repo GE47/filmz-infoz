@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineMail, AiOutlineKey } from "react-icons/ai";
 import { Formik } from "formik";
+import { useTranslation } from "react-i18next";
 import * as yup from "yup";
 
 import FormContainer from "../components/Form/FormContainer";
@@ -32,6 +33,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const errorMessage = useSelector(selectUserMessage);
   const naviagte = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -56,25 +58,25 @@ const SignIn = () => {
         <FormContainer
           onSubmit={handleSubmit as any}
           errorMessage={errorMessage}
-          title="Sign In"
+          title={t("Sign In")}
           linkPath="/register"
-          linkText="Create a new account"
+          linkText={t("Create a new account")}
         >
           <FormInput
             leftIcon={<AiOutlineMail color="black" />}
             errorMessage={errors.email}
             placeholder="John@domain.com"
             name="email"
-            label="Email"
+            label={t("Email")}
           />
 
           <FormInput
             leftIcon={<AiOutlineKey color="black" />}
             errorMessage={errors.password}
-            placeholder="Password"
+            placeholder={t("Password")}
             type="password"
             name="password"
-            label="Password"
+            label={t("Password")}
           />
         </FormContainer>
       )}
