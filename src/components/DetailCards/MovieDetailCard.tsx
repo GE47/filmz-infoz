@@ -136,6 +136,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
                 key={genre.id}
                 to={`/genre/${genre.id}`}
                 colorScheme="telegram"
+                variant="outline"
               >
                 {genre.name}
               </Badge>
