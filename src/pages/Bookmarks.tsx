@@ -1,23 +1,24 @@
+import { useSelector } from "react-redux";
+
 import GridContainer from "../components/GridContainer";
 import MovieCard from "../components/Card/MovieCard";
+import { selectBookmarks } from "../store/bookmarks/bookmarksSlice";
 
 const Bookmarks = () => {
+  const bookmarks = useSelector(selectBookmarks);
+
   return (
-    <GridContainer title="Bookmarks">
-      <MovieCard id="2" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="3" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="4" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="5" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="6" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="7" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="8" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="9" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="10" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="11" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="12" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="13" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="14" name="movie name" rating={8.7} imageUrl="" />
-      <MovieCard id="15" name="movie name" rating={8.7} imageUrl="" />
+    <GridContainer title="Bookmarks" showLoadMore={false}>
+      {bookmarks.data.map((bookmark) => (
+        <MovieCard
+          key={bookmark.id}
+          title={bookmark.title}
+          id={bookmark.id}
+          poster={bookmark.poster}
+          rating={bookmark.rating}
+          backdrop=""
+        />
+      ))}
     </GridContainer>
   );
 };
