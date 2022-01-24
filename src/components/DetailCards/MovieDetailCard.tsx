@@ -144,6 +144,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
                 colorScheme="telegram"
                 variant="outline"
                 mr="5px"
+                my="5px"
               >
                 {genre.name}
               </Badge>
