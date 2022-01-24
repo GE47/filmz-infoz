@@ -84,8 +84,9 @@ const NavBar = () => {
           h="full"
           alignItems="center"
           display={{ base: "none", md: "flex" }}
+          fontSize={{ md: "12px", lg: "16px" }}
         >
-          <ChakraLink as={Link} to="/" boxShadow="0">
+          <ChakraLink as={Link} to="/" boxShadow="0" mr={{ md: "3px" }}>
             {t("Home")}
           </ChakraLink>
 
@@ -98,7 +99,7 @@ const NavBar = () => {
           </ChakraLink>
 
           {currentUser && (
-            <ChakraLink  as={Link} to="/bookmarks">
+            <ChakraLink as={Link} to="/bookmarks" mx="3px">
               {t("Bookmarks")}
             </ChakraLink>
           )}
