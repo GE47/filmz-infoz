@@ -160,7 +160,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
             pr={currentLanguage === "ar" ? "50px" : 0}
             pt="3px"
           >
-            By <b>{ratingCount}</b> user
+            {t("By")} <b>{ratingCount}</b> {t("user")}
           </Text>
         </Box>
 
