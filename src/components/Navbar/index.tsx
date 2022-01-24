@@ -97,6 +97,12 @@ const NavBar = () => {
             {t("Actors")}
           </ChakraLink>
 
+          {currentUser && (
+            <ChakraLink  as={Link} to="/bookmarks">
+              {t("Bookmarks")}
+            </ChakraLink>
+          )}
+
           <SearchInput
             searchResults={searchList.data}
             onSearchChange={handleSearchChange}
@@ -120,16 +126,6 @@ const NavBar = () => {
                 </Text>
               </MenuButton>
               <MenuList zIndex={999}>
-                <MenuItem>
-                  <ChakraLink
-                    textAlign="center"
-                    w="full"
-                    as={Link}
-                    to="/bookmarks"
-                  >
-                    {t("Bookmarks")}
-                  </ChakraLink>
-                </MenuItem>
                 <MenuItem onClick={handleSignOut}>
                   <Text
                     textAlign="center"
