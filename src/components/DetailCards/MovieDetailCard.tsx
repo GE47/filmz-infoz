@@ -3,6 +3,7 @@ import { Badge, Box, Heading, Skeleton, Text, Image } from "@chakra-ui/react";
 import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import { Arrow } from "@egjs/flicking-plugins";
 import { useTranslation } from "react-i18next";
+import ReactPlayer from "react-player/youtube";
 
 import Arrows from "../Carousel/Arrows";
 import DetailsContainer from "./DetailsContainer";
@@ -72,27 +73,24 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
           bg="white"
         >
           {trailer ? (
-            <Skeleton
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
               w="full"
               h={{ base: "40vh", md: "50vh" }}
-              isLoaded={isVideoLoaded}
+              bg="gray.700"
             >
-              <Box
-                as="iframe"
-                src={
-                  trailer
-                    ? `https://www.youtube.com/embed/${trailer}`
-                    : undefined
-                }
-                title="Trailer"
-                allowFullScreen
+              <ReactPlayer
+                url={`https://www.youtube.com/watch?v=${trailer}`}
+                controls={true}
+                height="100%"
+                light={true}
                 onLoad={() => {
                   setIsVideoLoaded(true);
                 }}
-                w="full"
-                h={{ base: "40vh", md: "50vh" }}
               />
-            </Skeleton>
+            </Box>
           ) : (
             <Text
               pos="absolute"
