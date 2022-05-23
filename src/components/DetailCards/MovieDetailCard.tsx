@@ -29,7 +29,6 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
   const { t, i18n } = useTranslation();
   const currentLanguage = i18n.language;
 
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
@@ -86,9 +85,6 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
                 controls={true}
                 height="100%"
                 light={true}
-                onLoad={() => {
-                  setIsVideoLoaded(true);
-                }}
               />
             </Box>
           ) : (
