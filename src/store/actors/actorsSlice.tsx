@@ -113,7 +113,7 @@ export const getActorParticipations = createAsyncThunk<
   );
   const data = await request.json();
 
-  const results = data.cast.map((movie: any) => ({
+  const results = data.cast.slice(0, 10).map((movie: any) => ({
     id: movie.id,
     title: movie.title,
     backdrop: movie.backdrop_path,
