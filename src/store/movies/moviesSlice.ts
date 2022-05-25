@@ -168,14 +168,13 @@ export const getPopularSlides = createAsyncThunk(
     const request = await fetch(`${POPULAR_MOVIES}&page=1`);
     const data = await request.json();
 
-    const results = data.results
-      .map((res: any) => ({
-        poster: res.poster_path,
-        id: res.id,
-        title: res.title,
-        rating: res.vote_average,
-      }))
-      .slice(-10);
+    const results = data.results.slice(0, 10).map((res: any) => ({
+      poster: res.poster_path,
+      id: res.id,
+      title: res.title,
+      rating: res.vote_average,
+    }));
+
     return results;
   }
 );
@@ -186,15 +185,13 @@ export const getTopRatedSlides = createAsyncThunk(
     const request = await fetch(`${TOP_RATED}&page=1`);
     const data = await request.json();
 
-    const results = data.results
-      .map((res: any) => ({
-        poster: res.poster_path,
-        backdrop: res.backdrop_path,
-        id: res.id,
-        title: res.title,
-        rating: res.vote_average,
-      }))
-      .slice(-10);
+    const results = data.results.slice(0, 10).map((res: any) => ({
+      poster: res.poster_path,
+      backdrop: res.backdrop_path,
+      id: res.id,
+      title: res.title,
+      rating: res.vote_average,
+    }));
     return results;
   }
 );
@@ -269,15 +266,13 @@ export const getMoviesOnSearch = createAsyncThunk<
 
   const data = await request.json();
 
-  const results = data.results
-    .map((res: any) => ({
-      poster: res.poster_path,
-      backdrop: res.backdrop_path,
-      id: res.id,
-      title: res.title,
-      rating: res.vote_average,
-    }))
-    .slice(-10);
+  const results = data.results.slice(0, 10).map((res: any) => ({
+    poster: res.poster_path,
+    backdrop: res.backdrop_path,
+    id: res.id,
+    title: res.title,
+    rating: res.vote_average,
+  }));
 
   return results;
 });
@@ -368,15 +363,13 @@ export const getRelatedMovies = createAsyncThunk<
   const request = await fetch(`${BASE_URL}/movie/${id}/similar${API_KEY}`);
   const data = await request.json();
 
-  const results = data.results
-    .map((result: any) => ({
-      poster: result.poster_path,
-      backdrop: result.backdrop_path,
-      title: result.title,
-      rating: result.vote_average,
-      id: result.id,
-    }))
-    .slice(-10);
+  const results = data.results.slice(0, 10).map((result: any) => ({
+    poster: result.poster_path,
+    backdrop: result.backdrop_path,
+    title: result.title,
+    rating: result.vote_average,
+    id: result.id,
+  }));
 
   return results;
 });
