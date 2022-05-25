@@ -10,7 +10,6 @@ import {
   MOVIES_BY_GENRE,
   MOVIES_BY_KEYWORD,
 } from "../../constants";
-import { findWhere } from "underscore";
 import { ActorCardProps } from "../actors/actorsSlice";
 
 type status = "idle" | "loading" | "error";
@@ -46,7 +45,6 @@ export interface MovieDetailsProps {
   genres: { name: string; id: number }[];
   length: number;
   ratingCount: number;
-  trailer?: string;
   description: string;
 }
 
@@ -86,6 +84,11 @@ interface MoviesState {
 
   relatedMovies: {
     data: MoviesCardProps[];
+    status: status;
+  };
+
+  movieTrailer: {
+    data: string | undefined;
     status: status;
   };
 }
@@ -131,7 +134,6 @@ const initialState: MoviesState = {
       rating: 0,
       length: 0,
       ratingCount: 0,
-      trailer: "",
       description: "",
     },
     status: "idle",
@@ -143,6 +145,10 @@ const initialState: MoviesState = {
   relatedMovies: {
     data: [],
     status: "loading",
+  },
+  movieTrailer: {
+    data: "",
+    status: "idle",
   },
 };
 
@@ -328,10 +334,9 @@ export const getMovieTrailer = createAsyncThunk<string, { id: string }>(
     const request = await fetch(`${BASE_URL}/movie/${id}/videos${API_KEY}`);
     const data = await request.json();
 
-    const result = findWhere(data.results, {
-      site: "YouTube",
-      type: "Trailer",
-    });
+    const result = data.results.find(
+      (result: any) => result.site === "YouTube" && result.type === "Trailer"
+    );
 
     return result.key;
   }
@@ -544,17 +549,18 @@ const moviesSlice = createSlice({
     });
 
     builder.addCase(getMovieTrailer.pending, (state) => {
-      state.movieDetails.status = "loading";
-      state.movieDetails.data.trailer = "";
+      state.movieTrailer.status = "loading";
+      state.movieTrailer.data = undefined;
     });
 
     builder.addCase(getMovieTrailer.fulfilled, (state, action) => {
-      state.movieDetails.data.trailer = action.payload;
-      state.movieDetails.status = "idle";
+      state.movieTrailer.data = action.payload;
+      state.movieTrailer.status = "idle";
     });
 
     builder.addCase(getMovieTrailer.rejected, (state) => {
-      state.movieDetails.status = "idle";
+      state.movieTrailer.status = "error";
+      state.movieTrailer.data = undefined;
     });
 
     builder.addCase(getMovieTopCast.pending, (state) => {
@@ -597,6 +603,8 @@ export const selectGenres = (state: RootState) => state.movies.genres;
 export const selectSearchList = (state: RootState) => state.movies.searchList;
 export const selectMovieDetails = (state: RootState) =>
   state.movies.movieDetails;
+export const selectMovieTrailer = (state: RootState) =>
+  state.movies.movieTrailer;
 export const selectRelatedMovies = (state: RootState) =>
   state.movies.relatedMovies;
 export const selectMovieTopCast = (state: RootState) =>

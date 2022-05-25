@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Badge, Box, Heading, Skeleton, Text, Image } from "@chakra-ui/react";
 import Flicking, { ViewportSlot } from "@egjs/react-flicking";
 import { Arrow } from "@egjs/flicking-plugins";
 import { useTranslation } from "react-i18next";
 import ReactPlayer from "react-player/youtube";
 
+import { selectMovieTrailer } from "../../store/movies/moviesSlice";
 import Arrows from "../Carousel/Arrows";
 import DetailsContainer from "./DetailsContainer";
 import Rating from "../Rating";
@@ -19,7 +21,6 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
   ratingCount,
   poster,
   backdrop,
-  trailer,
   genres,
   length,
   id,
@@ -30,6 +31,8 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
   const currentLanguage = i18n.language;
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  const movieTrailer = useSelector(selectMovieTrailer);
 
   return (
     <DetailsContainer>
@@ -71,7 +74,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
           justifyContent="center"
           bg="white"
         >
-          {trailer ? (
+          {movieTrailer.status === "idle" && movieTrailer.data ? (
             <Box
               display="flex"
               alignItems="center"
@@ -81,7 +84,7 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
               bg="gray.700"
             >
               <ReactPlayer
-                url={`https://www.youtube.com/watch?v=${trailer}`}
+                url={`https://www.youtube.com/watch?v=${movieTrailer.data}`}
                 controls={true}
                 height="100%"
                 light={true}

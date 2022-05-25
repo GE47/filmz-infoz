@@ -64,7 +64,6 @@ const Movie: React.FC = () => {
         backdrop={movieDetails.data.backdrop}
         genres={movieDetails.data.genres}
         length={movieDetails.data.length}
-        trailer={movieDetails.data.trailer}
         id={id!}
       />
       {topCast.data.length > 0 && (
