@@ -351,6 +351,7 @@ export const getMovieTopCast = createAsyncThunk<
 
   const results = data.cast
     .filter((result: any) => result.known_for_department === "Acting")
+    .slice(0, 10)
     .map((result: any) => ({
       name: result.name,
       id: result.id,
