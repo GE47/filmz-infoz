@@ -1,12 +1,10 @@
-import { Box, Divider, Stack, Text } from "@chakra-ui/react";
+import { Box, Divider, Stack } from "@chakra-ui/react";
 import { GoMarkGithub } from "react-icons/go";
 import { FiLinkedin } from "react-icons/fi";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <Box>
+    <Box pb={3}>
       <Divider mb={5} mt={3} />
 
       <Box
@@ -27,9 +25,6 @@ const Footer = () => {
             <FiLinkedin size="30px" />
           </a>
         </Stack>
-        <Text fontSize="15px" mt="5px">
-          <b>@{currentYear}</b> Filmz Infoz
-        </Text>
       </Box>
     </Box>
   );
