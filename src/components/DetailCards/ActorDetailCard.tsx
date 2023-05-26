@@ -19,12 +19,13 @@ const ActorDetailCard: React.FC<ActorProps> = ({
   const currentLanguage = i18n.language;
 
   return (
-    <DetailsContainer>
+    <DetailsContainer gap={{ base: 0, md: 3 }}>
       <Box
-        alignSelf="flex-start"
-        mt={{ base: "0px", md: "10px" }}
-        w={{ base: "100%", md: "50%" }}
         borderRadius="md"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flex={{ base: 1, md: 2 }}
       >
         <Skeleton
           h={{ base: "40vh", md: "full" }}
@@ -34,16 +35,17 @@ const ActorDetailCard: React.FC<ActorProps> = ({
           <Image
             src={
               poster
-                ? `https://image.tmdb.org/t/p/original/${poster}`
+                ? `https://image.tmdb.org/t/p/w500/${poster}`
                 : "/assets/image_not_found.jpg"
             }
             w="full"
-            borderRadius="md"
             h={{ base: "40vh", md: "50vh" }}
-            objectFit="cover"
             onLoad={() => {
               setIsImageLoaded(true);
             }}
+            objectFit="cover"
+            pointerEvents="none"
+            borderRadius="md"
           />
         </Skeleton>
       </Box>
@@ -52,11 +54,10 @@ const ActorDetailCard: React.FC<ActorProps> = ({
         alignSelf="flex-start"
         display="flex"
         flexDir="column"
-        w={{ base: "100%", md: "50%" }}
         h="full"
-        pl={{ base: "0", md: "10px" }}
         pt="10px"
         style={{ direction: currentLanguage === "ar" ? "rtl" : "ltr" }}
+        flex={{ base: 1, md: 4 }}
       >
         <Heading as="h3" fontSize="2xl" mb="1rem">
           {name}
