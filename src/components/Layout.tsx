@@ -4,7 +4,7 @@ import NavBar from "./Navbar";
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <Container maxW="container.xl">
+    <Container maxW="container.lg">
       <NavBar />
       <Container minH="80vh" maxW="container.lg">
         {children}
