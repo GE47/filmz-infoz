@@ -1,18 +1,24 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Badge, Box, Heading, Skeleton, Text, Image } from "@chakra-ui/react";
-import Flicking, { ViewportSlot } from "@egjs/react-flicking";
-import { Arrow } from "@egjs/flicking-plugins";
+import {
+  Badge,
+  Box,
+  Heading,
+  Skeleton,
+  Text,
+  Image,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
-import ReactPlayer from "react-player/youtube";
+import { IoLogoYoutube } from "react-icons/io";
 
 import { selectMovieTrailer } from "../../store/movies/moviesSlice";
-import Arrows from "../Carousel/Arrows";
 import DetailsContainer from "./DetailsContainer";
 import Rating from "../Rating";
 import { MovieDetailsProps } from "../../store/movies/moviesSlice";
 import { Link } from "react-router-dom";
 import Bookmark from "../Bookmark";
+import TrailerModal from "../TrailerModal";
 
 const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
   title,
@@ -25,96 +31,57 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
   length,
   id,
 }) => {
-  const plugins = [new Arrow()];
-
   const { t, i18n } = useTranslation();
   const currentLanguage = i18n.language;
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
+  const { onClose, onOpen, isOpen } = useDisclosure();
+
   const movieTrailer = useSelector(selectMovieTrailer);
 
   return (
-    <DetailsContainer>
+    <DetailsContainer gap={{ base: 0, md: 3 }}>
       <Box
-        as={Flicking}
-        w={{ base: "full", md: "50%" }}
-        h="full"
-        plugins={plugins}
         borderRadius="md"
-        pos="relative"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flex={{ base: 1, md: 2 }}
       >
-        <Box w="full" h="full">
-          <Skeleton h={{ base: "40vh", md: "50vh" }} isLoaded={isImageLoaded}>
-            <Image
-              src={
-                poster
-                  ? `https://image.tmdb.org/t/p/original/${poster}`
-                  : backdrop
-                  ? `https://image.tmdb.org/t/p/original/${backdrop} `
-                  : "/assets/image_not_found.jpg"
-              }
-              w="full"
-              h={{ base: "40vh", md: "50vh" }}
-              onLoad={() => {
-                setIsImageLoaded(true);
-              }}
-              pointerEvents="none"
-              objectFit="contain"
-              bg="gray.700"
-            />
-          </Skeleton>
-        </Box>
-
-        <Box
-          w="full"
-          h="full"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          bg="white"
+        <Skeleton
+          h={{ base: "40vh", md: "full" }}
+          isLoaded={isImageLoaded}
+          borderRadius="md"
         >
-          {movieTrailer.status === "idle" && movieTrailer.data ? (
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              w="full"
-              h={{ base: "40vh", md: "50vh" }}
-              bg="gray.700"
-            >
-              <ReactPlayer
-                url={`https://www.youtube.com/watch?v=${movieTrailer.data}`}
-                controls={true}
-                height="100%"
-                light={true}
-              />
-            </Box>
-          ) : (
-            <Text
-              pos="absolute"
-              textAlign="center"
-              fontSize="25px"
-              bottom="50%"
-              w="full"
-            >
-              {t("Trailer Not Found")}
-            </Text>
-          )}
-        </Box>
-        <ViewportSlot>
-          <Arrows />
-        </ViewportSlot>
+          <Image
+            src={
+              poster
+                ? `https://image.tmdb.org/t/p/w500/${poster}`
+                : backdrop
+                ? `https://image.tmdb.org/t/p/w500/${backdrop} `
+                : "/assets/image_not_found.jpg"
+            }
+            w="full"
+            h={{ base: "40vh", md: "50vh" }}
+            onLoad={() => {
+              setIsImageLoaded(true);
+            }}
+            pointerEvents="none"
+            objectFit="cover"
+            borderRadius="md"
+          />
+        </Skeleton>
       </Box>
+
       <Box
         alignSelf="flex-start"
         display="flex"
         flexDir="column"
-        w={{ base: "100%", md: "50%" }}
         h="full"
-        pl={{ base: "0", md: "10px" }}
         pt="10px"
         style={{ direction: currentLanguage === "ar" ? "rtl" : "ltr" }}
+        flex={{ base: 1, md: 4 }}
       >
         <Box display="flex" alignItems="center" mb="1rem">
           <Heading as="h3" fontSize="2xl" mr="3px">
@@ -161,13 +128,30 @@ const MovieDetailCard: React.FC<MovieDetailsProps & { id: string }> = ({
           </Text>
         </Box>
 
-        <Box>
+        <Box mb="1rem">
           <Badge>{t("Duration")}: </Badge>{" "}
           <Text as="span">
             {length > 0 ? `${length} ${t("mins")}` : `Unknown`}{" "}
           </Text>
         </Box>
+
+        {movieTrailer.data && (
+          <Box bg="none" display="flex" alignItems="center" gap={1}>
+            <Badge>{t("Trailer")}: </Badge>
+            <IoLogoYoutube
+              cursor="pointer"
+              size="30px"
+              onClick={() => onOpen()}
+            />
+          </Box>
+        )}
       </Box>
+
+      <TrailerModal
+        url={movieTrailer.data!}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </DetailsContainer>
   );
 };
