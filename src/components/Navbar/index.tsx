@@ -61,28 +61,26 @@ const NavBar = () => {
   };
 
   return (
-    <Box pb={3}>
+    <Box pb={3} px={4}>
       <Box
         display="flex"
         alignItems="center"
         justifyContent="space-between"
         py={3}
       >
-        <Heading
-          as={Link}
-          to="/"
-          flexGrow={4}
-          fontSize={{ base: "xl", md: "3xl", lg: "4xl" }}
-        >
-          Filmz Infoz
+        <Heading flexGrow={4} display="flex" alignItems="center">
+          <Text as={Link} to="/" fontSize={{ base: "sm", lg: "xl" }}>
+            Filmz Infoz
+          </Text>
         </Heading>
 
         <Box
-          direction="row"
+          flexDir="row"
           justifyContent="space-between"
           flexGrow={1}
           h="full"
           alignItems="center"
+          gap={3}
           display={{ base: "none", md: "flex" }}
           fontSize={{ md: "12px", lg: "16px" }}
         >
